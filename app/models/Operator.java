@@ -8,25 +8,25 @@ import javax.persistence.*;
 import java.util.*;
 
 /*
- * 传送到前端的json串中的子算法
- * 子算子也是具体的一个算法，也就是一个类+一个方法
- * 所以为了方便，我们会传送一些额外的东西到client端
+ * 表示后台的一个算子
  */
-public class OperatorChild {
+public class Operator {
 	
-	public String text;
+	public String category;
 	public String operatorClass;
 	public String operatorMethod;
 	
+	public Class[] classArgument;
 	public String[] classArgumentName;
 	public Object[] classArgumentValue;
 	public String[] classFrontStyle;
 	
+	public Class[] methodArgument;
 	public String[] methodArgumentName;
 	public Object[] methodArgumentValue;
 	public String[] methodFrontStyle;
 	
+	public String name;
 	public String description;
-	
-	
+
 }

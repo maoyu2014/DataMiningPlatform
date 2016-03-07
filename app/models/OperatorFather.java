@@ -7,6 +7,9 @@ import javax.persistence.*;
 
 import java.util.*;
 
+/*
+ * 传送到前端的json串中的父算子
+ */
 public class OperatorFather {
 	public int id;
 	public String text;
