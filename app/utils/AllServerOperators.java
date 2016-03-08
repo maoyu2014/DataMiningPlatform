@@ -38,7 +38,7 @@ public class AllServerOperators {
 		operator.methodArgument = new Class[] {File.class, int.class, String.class};
 		operator.methodArgumentName = new String[] {"file", "classIndex", "separator"};
 		operator.methodArgumentValue = new Object[] {};
-		operator.methodFrontStyle = new String[] {"file", "integer", "string"};
+		operator.methodFrontStyle = new String[] {"filebox", "numberbox", "textbox"};
 		operator.name = "读取文件";
 		operator.description = "DataManipulation-读取文件";
 		lists.add(operator);
@@ -56,7 +56,7 @@ public class AllServerOperators {
 		operator.methodArgument = new Class[] {Dataset.class, File.class};
 		operator.methodArgumentName = new String[] {"data", "file"};
 		operator.methodArgumentValue = new Object[] {};
-		operator.methodFrontStyle = new String[] {"inner-data", "file"};
+		operator.methodFrontStyle = new String[] {"inner-data", "filebox"};
 		operator.name = "导出文件";
 		operator.description = "DataManipulation-导出文件";
 		lists.add(operator);
