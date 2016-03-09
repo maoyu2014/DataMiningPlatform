@@ -3,6 +3,7 @@ function loadOperatorParameter01(){
 	$("#argumentSetID").empty();
 	
 	var row = $('#experdgid01').datagrid('getSelected');
+	var index = $('#experdgid01').datagrid('getRowIndex', row);
 	
 	/*
 	alert(row.name);
@@ -14,34 +15,122 @@ function loadOperatorParameter01(){
 		var description = operator.description;
 		$("#XiangGuanShuoMing").html("<p>"+description+"</p>");
 		
+		var classArgumentName = operator.classArgumentName;
+		var classArgumentValue = operator.classArgumentValue;
+		var classFrontStyle = operator.classFrontStyle;
+		if (classArgumentName!=undefined) { 
+			var classLength = classArgumentName.length;
+			for (var i=0; i<classLength; i++) {
+				var value = classArgumentValue[i];
+				var classinputformid="classinputformid"+i;
+				if (classFrontStyle[i]=="textbox") {
+					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-textbox' value="+value+"></p>");
+					$("#argumentSetID").append(temp);
+				} else if (classFrontStyle[i]=="numberbox") {
+					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-numberbox' value="+value+"></p>");
+					$("#argumentSetID").append(temp);
+				} else if (classFrontStyle[i]=="filebox") {
+					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-filebox' >"+
+							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;'>上传</a>"+"</p>");
+					var temp2 = $("<p>"+value+"</p>");
+					$("#argumentSetID").append(temp, temp2);
+				}
+			}
+		}
+		
 		var methodArgumentName = operator.methodArgumentName;
 		var methodArgumentValue = operator.methodArgumentValue;
 		var methodFrontStyle = operator.methodFrontStyle;
-		
-		var methodLength = methodArgumentName.length;
-		for (var i=0; i<methodLength; i++) {
-			var inputformid="inputformid"+i;
-			if (methodFrontStyle[i]=="textbox") {
-				var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + inputformid + " class='easyui-textbox' value="+methodArgumentValue[i]+"></p>");
-				$("#argumentSetID").append(temp);
-			} else if (methodFrontStyle[i]=="numberbox") {
-				var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + inputformid + " class='easyui-numberbox' value="+methodArgumentValue[i]+"></p>");
-				$("#argumentSetID").append(temp);
-			} else if (methodFrontStyle[i]=="filebox") {
-				var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + inputformid + " class='easyui-filebox' value="+methodArgumentValue[i]+">"+
-						"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;'>上传</a>"+"</p>");
-				$("#argumentSetID").append(temp);
+		if (methodArgumentName!=undefined) {
+			var methodLength = methodArgumentName.length;
+			for (var i=0; i<methodLength; i++) {
+				var value = methodArgumentValue[i];
+				/*
+				if (value==undefined) {
+					value=null;
+				}
+				*/
+				var methodinputformid="methodinputformid"+i;
+				if (methodFrontStyle[i]=="textbox") {
+					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-textbox' value="+value+"></p>");
+					$("#argumentSetID").append(temp);
+				} else if (methodFrontStyle[i]=="numberbox") {
+					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-numberbox' value="+value+"></p>");
+					$("#argumentSetID").append(temp);
+				} else if (methodFrontStyle[i]=="filebox") {
+					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-filebox' >"+
+							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;'>上传</a>"+"</p>");
+					var temp2 = $("<p>"+value+"</p>");
+					$("#argumentSetID").append(temp, temp2);
+				}
 			}
 		}
-		var temp = $("<p>"+"<a href='#' class='easyui-linkbutton' style='width:80px;margin-top:5px;' onclick='saveValueBack01()'>保存</a>"+"</p>");
+		
+		var temp = $("<p>"+"<a href='#' class='easyui-linkbutton' style='width:80px;margin-top:5px;' onclick='saveValueBack01("+index+")'>保存</a>"+"</p>");
 		$("#argumentSetID").append(temp);
 		$.parser.parse("#argumentSetID");
 	} else {
-		alert("loadOperatorParameter.js函数中row没有发现");
+		alert("loadOperatorParameter.js函数:row没有发现");
 	}
 	
 }
 
+
+function saveValueBack01(oldindex) {
+	var row = $('#experdgid01').datagrid('getSelected');
+	var newindex = $('#experdgid01').datagrid('getRowIndex', row);
+	if (newindex != oldindex) {
+		alert("请先保存该算子参数后再切换到其他算子调参");
+		return;
+	}
+	if (row){
+		var operator = row.operator;
+		
+		var classArgumentName = operator.classArgumentName;
+		var classArgumentValue = operator.classArgumentValue;
+		var classFrontStyle = operator.classFrontStyle;
+		if (classArgumentName!=undefined) {
+			var classLength = classArgumentName.length;
+			for (var i=0; i<classLength; i++) {
+				var classinputformid="classinputformid"+i;
+				var value;
+				if (classFrontStyle[i]=="textbox") {
+					value = $("#"+classinputformid).textbox('getValue');
+				} else if (classFrontStyle[i]=="numberbox") {
+					value = $("#"+classinputformid).numberbox('getValue');
+				} else if (classFrontStyle[i]=="filebox") {
+					value = $("#"+classinputformid).filebox('getValue');
+				}
+				classArgumentValue[i] = value;
+			}
+		}
+		
+		var methodArgumentName = operator.methodArgumentName;
+		var methodArgumentValue = operator.methodArgumentValue;
+		var methodFrontStyle = operator.methodFrontStyle;
+		if (methodArgumentName!=undefined) {
+			var methodLength = methodArgumentName.length;
+			for (var i=0; i<methodLength; i++) {
+				var methodinputformid="methodinputformid"+i;
+				var value;
+				if (methodFrontStyle[i]=="textbox") {
+					value = $("#"+methodinputformid).textbox('getValue');
+				} else if (methodFrontStyle[i]=="numberbox") {
+					value = $("#"+methodinputformid).numberbox('getValue');
+				} else if (methodFrontStyle[i]=="filebox") {
+					value = $("#"+methodinputformid).filebox('getValue');
+				}
+	//			var value = $("#"+inputformid).val();
+				methodArgumentValue[i] = value;
+			}
+		}
+		
+		alert("保存成功");
+	} else {
+		alert("loadOperatorParameter.js函数:存回表单值时row没有发现");
+		alert("保存失败");
+	}
+}
 
 
 function loadOperatorParameter02(){
@@ -50,26 +139,3 @@ function loadOperatorParameter02(){
 
 
 
-function saveValueBack01() {
-	var row = $('#experdgid01').datagrid('getSelected');
-	if (row){
-		var operator = row.operator;
-		var methodArgumentName = operator.methodArgumentName;
-		var methodArgumentValue = operator.methodArgumentValue;
-		var methodFrontStyle = operator.methodFrontStyle;
-//		alert(methodArgumentName);
-//		alert(methodArgumentValue);
-//		alert(methodFrontStyle);
-		
-		var methodLength = methodArgumentName.length;
-		for (var i=0; i<methodLength; i++) {
-			var inputformid="inputformid"+i;
-			var value = $("#"+inputformid).val();
-			methodArgumentValue[i] = value;
-		}
-		alert("保存成功");
-	} else {
-		alert("loadOperatorParameter.js函数存回表单值时row没有发现");
-		alert("保存失败");
-	}
-}

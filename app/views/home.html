@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="@{'/public/javascripts/addToExperimentGrid.js'}"></script>
 	<script type="text/javascript" src="@{'/public/javascripts/removeOperatorFromExpGrid.js'}"></script>
 	<script type="text/javascript" src="@{'/public/javascripts/loadOperatorParameter.js'}"></script>
+	<script type="text/javascript" src="@{'/public/javascripts/runExperiment.js'}"></script>
 </head>
 
 <body class="easyui-layout">
@@ -53,7 +54,7 @@
 				</div>
 			</div>
 			
-			<div data-options="region:'south',title:'运行日志',split:true" style="height:45%;">
+			<div data-options="region:'south',title:'运行|操作 日志',split:true" style="height:45%;">
 			</div>
 		</div>
 	</div>
@@ -66,7 +67,7 @@
 					
 					<div id="expertargetid01" data-options="region:'center',title:'实验面板一',split:true" style="">
 						<div style="margin:5px">
-							<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">运行</a>
+							<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="runExperiment01()">运行</a>
 							<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeOperatorFromExpGrid01()">删除</a>
 							<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="loadOperatorParameter01()">调参</a>
 							<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
