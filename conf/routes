@@ -5,6 +5,7 @@
 # Home page
 GET     /                                       Application.index
 GET     /getAllOperators                        Application.getAllOperators
+GET     /acceptExperiment                       Application.acceptExperiment
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -96,12 +96,14 @@ function saveValueBack01(oldindex) {
 				var value;
 				if (classFrontStyle[i]=="textbox") {
 					value = $("#"+classinputformid).textbox('getValue');
+					classArgumentValue[i] = value;
 				} else if (classFrontStyle[i]=="numberbox") {
 					value = $("#"+classinputformid).numberbox('getValue');
+					classArgumentValue[i] = value;
 				} else if (classFrontStyle[i]=="filebox") {
 					value = $("#"+classinputformid).filebox('getValue');
+					classArgumentValue[i] = value;
 				}
-				classArgumentValue[i] = value;
 			}
 		}
 		
@@ -115,13 +117,15 @@ function saveValueBack01(oldindex) {
 				var value;
 				if (methodFrontStyle[i]=="textbox") {
 					value = $("#"+methodinputformid).textbox('getValue');
+					methodArgumentValue[i] = value;
 				} else if (methodFrontStyle[i]=="numberbox") {
 					value = $("#"+methodinputformid).numberbox('getValue');
+					methodArgumentValue[i] = value;
 				} else if (methodFrontStyle[i]=="filebox") {
 					value = $("#"+methodinputformid).filebox('getValue');
+					methodArgumentValue[i] = value;
 				}
 	//			var value = $("#"+inputformid).val();
-				methodArgumentValue[i] = value;
 			}
 		}
 		
