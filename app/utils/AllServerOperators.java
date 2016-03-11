@@ -16,7 +16,7 @@ import models.OperatorFather;
  * 在构造函数中进行所有算子的初始化
  */
 public class AllServerOperators {
-
+	
 	public List<Operator> lists= null;
 	public Map<String, Operator> maps = null;
 	
@@ -34,10 +34,10 @@ public class AllServerOperators {
 		operator.operatorClass = "net.sf.javaml.tools.data.FileHandler";
 		operator.operatorMethod = "loadDataset";
 		
-		operator.classArgument = null;
-		operator.classArgumentName = null;
-		operator.classArgumentValue = null;
-		operator.classFrontStyle = null;
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
 		
 		operator.methodArgument = new Class[] {File.class, int.class, String.class};
 		operator.methodArgumentName = new String[] {"inputfile", "classIndex", "separator"};
@@ -58,10 +58,10 @@ public class AllServerOperators {
 		operator.operatorClass = "net.sf.javaml.tools.data.FileHandler";
 		operator.operatorMethod = "exportDataset";
 		
-		operator.classArgument = null;
-		operator.classArgumentName = null;
-		operator.classArgumentValue = null;
-		operator.classFrontStyle = null;
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
 		
 		operator.methodArgument = new Class[] {Dataset.class, File.class};
 		operator.methodArgumentName = new String[] {"data", "file"};
@@ -88,7 +88,7 @@ public class AllServerOperators {
 		
 		operator.methodArgument = new Class[] {Dataset.class};
 		operator.methodArgumentName = new String[] {"data"};
-		operator.methodArgumentValue = new Object[] {};
+		operator.methodArgumentValue = new Object[] {null};
 		operator.methodFrontStyle = new String[] {"inner-data"};
 		
 		operator.name = "KMeans算法";

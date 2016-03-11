@@ -29,7 +29,7 @@ public class Application extends Controller {
     	Object obj=JSONValue.parse(rows);
     	JSONArray arrayrow=(JSONArray)obj;
     	int n = arrayrow.size();
-    	new RunExperiment(n, arrayrow);
+    	RunExperiment.Run(n, arrayrow);
     }
     
 }

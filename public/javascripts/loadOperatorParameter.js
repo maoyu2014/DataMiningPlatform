@@ -99,7 +99,7 @@ function saveValueBack01(oldindex) {
 					classArgumentValue[i] = value;
 				} else if (classFrontStyle[i]=="numberbox") {
 					value = $("#"+classinputformid).numberbox('getValue');
-					classArgumentValue[i] = value;
+					classArgumentValue[i] = parseInt(value);
 				} else if (classFrontStyle[i]=="filebox") {
 					value = $("#"+classinputformid).filebox('getValue');
 					classArgumentValue[i] = value;
@@ -120,7 +120,7 @@ function saveValueBack01(oldindex) {
 					methodArgumentValue[i] = value;
 				} else if (methodFrontStyle[i]=="numberbox") {
 					value = $("#"+methodinputformid).numberbox('getValue');
-					methodArgumentValue[i] = value;
+					methodArgumentValue[i] = parseInt(value);
 				} else if (methodFrontStyle[i]=="filebox") {
 					value = $("#"+methodinputformid).filebox('getValue');
 					methodArgumentValue[i] = value;
