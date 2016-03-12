@@ -25,6 +25,7 @@ public class Operator {
 	public String[] methodArgumentName;
 	public Object[] methodArgumentValue;
 	public String[] methodFrontStyle;
+	public Class returnType;
 	
 	public String name;
 	public String description;

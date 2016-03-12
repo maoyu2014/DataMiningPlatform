@@ -1,3 +1,6 @@
+/*
+ * 从算子集中去动态的处理每个算子所具备的参数，在参数集中显示出来
+ */
 function loadOperatorParameter01(){
 	
 	$("#argumentSetID").empty();
@@ -30,8 +33,12 @@ function loadOperatorParameter01(){
 					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-numberbox' value="+value+"></p>");
 					$("#argumentSetID").append(temp);
 				} else if (classFrontStyle[i]=="filebox") {
-					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-filebox' >"+
-							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;'>上传</a>"+"</p>");
+					var temp = $("<p>"+classArgumentName[i]+":"+
+							"<form id='classff' method='post' enctype='multipart/form-data'>"+
+							"<input id=" + classinputformid + " name='photofile' class='easyui-filebox' >"+
+							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;' onclick='uploadClassFormFile("+i+")'>上传</a>"+
+							"</form>"+
+							"</p>");
 					var temp2 = $("<p>"+value+"</p>");
 					$("#argumentSetID").append(temp, temp2);
 				}
@@ -58,8 +65,12 @@ function loadOperatorParameter01(){
 					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-numberbox' value="+value+"></p>");
 					$("#argumentSetID").append(temp);
 				} else if (methodFrontStyle[i]=="filebox") {
-					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-filebox' >"+
-							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;'>上传</a>"+"</p>");
+					var temp = $("<p>"+methodArgumentName[i]+":"+
+							"<form id='methodff' method='post' enctype='multipart/form-data'>"+
+							"<input id=" + methodinputformid + " name='photofile' class='easyui-filebox' >"+
+							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;' onclick='uploadMethodFormFile("+i+")'>上传</a>"+
+							"</form>"+
+							"</p>");
 					var temp2 = $("<p>"+value+"</p>");
 					$("#argumentSetID").append(temp, temp2);
 				}
@@ -75,7 +86,55 @@ function loadOperatorParameter01(){
 	
 }
 
+/*
+ * 处理类的构造函数中有文件上传的filebox，同时将后端生成的新文件名传递给前端算子保存起来
+ */
+function uploadClassFormFile(iii) {
+	$("#classff").form({
+	    url:"/uploadPhotoFile",
+	    onSubmit: function(){
+	        // do some check
+	        // return false to prevent submit;
+	    },
+	    success:function(data){
+//	    	alert(data);
+	    	var row = $('#experdgid01').datagrid('getSelected');
+	    	var operator = row.operator;
+	    	var classArgumentValue = operator.classArgumentValue;
+	    	classArgumentValue[iii]=data;
+	        alert("上传成功");
+	    }
+	});
+	// submit the form
+	$("#classff").submit();
+}
 
+/*
+ * 处理方法中有文件上传的filebox，同时将后端生成的新文件名传递给前端算子保存起来
+ */
+function uploadMethodFormFile(iii) {
+	$("#methodff").form({
+	    url:"/uploadPhotoFile",
+	    onSubmit: function(){
+	        // do some check
+	        // return false to prevent submit;
+	    },
+	    success:function(data){
+//	    	alert(data);
+	    	var row = $('#experdgid01').datagrid('getSelected');
+	    	var operator = row.operator;
+	    	var methodArgumentValue = operator.methodArgumentValue;
+	    	methodArgumentValue[iii]=data;
+	        alert("上传成功");
+	    }
+	});
+	// submit the form
+	$("#methodff").submit();
+}
+
+/*
+ * 将textbox和numberbox中的值保存回前端的算子中去
+ */
 function saveValueBack01(oldindex) {
 	var row = $('#experdgid01').datagrid('getSelected');
 	var newindex = $('#experdgid01').datagrid('getRowIndex', row);
@@ -100,9 +159,6 @@ function saveValueBack01(oldindex) {
 				} else if (classFrontStyle[i]=="numberbox") {
 					value = $("#"+classinputformid).numberbox('getValue');
 					classArgumentValue[i] = parseInt(value);
-				} else if (classFrontStyle[i]=="filebox") {
-					value = $("#"+classinputformid).filebox('getValue');
-					classArgumentValue[i] = value;
 				}
 			}
 		}
@@ -121,9 +177,6 @@ function saveValueBack01(oldindex) {
 				} else if (methodFrontStyle[i]=="numberbox") {
 					value = $("#"+methodinputformid).numberbox('getValue');
 					methodArgumentValue[i] = parseInt(value);
-				} else if (methodFrontStyle[i]=="filebox") {
-					value = $("#"+methodinputformid).filebox('getValue');
-					methodArgumentValue[i] = value;
 				}
 	//			var value = $("#"+inputformid).val();
 			}

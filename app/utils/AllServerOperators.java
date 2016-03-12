@@ -43,6 +43,7 @@ public class AllServerOperators {
 		operator.methodArgumentName = new String[] {"inputfile", "classIndex", "separator"};
 		operator.methodArgumentValue = new Object[] {null, -1, "\\t"};
 		operator.methodFrontStyle = new String[] {"filebox", "numberbox", "textbox"};
+		operator.returnType = Dataset.class;
 		
 		operator.name = "读取文件";
 		operator.description = "<p>DataManipulation-读取文件</p>" +
@@ -64,9 +65,10 @@ public class AllServerOperators {
 		operator.classFrontStyle = new String[] {};
 		
 		operator.methodArgument = new Class[] {Dataset.class, File.class};
-		operator.methodArgumentName = new String[] {"data", "file"};
+		operator.methodArgumentName = new String[] {"data", "outputfile"};
 		operator.methodArgumentValue = new Object[] {};
 		operator.methodFrontStyle = new String[] {"inner-data", "filebox"};
+		operator.returnType = void.class;
 		
 		operator.name = "导出文件";
 		operator.description = "DataManipulation-导出文件";
@@ -90,7 +92,8 @@ public class AllServerOperators {
 		operator.methodArgumentName = new String[] {"data"};
 		operator.methodArgumentValue = new Object[] {null};
 		operator.methodFrontStyle = new String[] {"inner-data"};
-		
+		operator.returnType = Dataset[].class;
+				
 		operator.name = "KMeans算法";
 		operator.description = "<p>Clustering-KMeans算法</p>"+
 								"<p>经典的聚类算法啊，可以对一组数据进行聚类操作。参数clusters表示需要聚合成几类，参数iterations表示需要进行迭代的次数</p>";

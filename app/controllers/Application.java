@@ -1,10 +1,13 @@
 package controllers;
 
 import play.*;
+import play.data.Upload;
+import play.libs.Files;
 import play.mvc.*;
 import utils.AllOperators;
 import utils.RunExperiment;
 
+import java.io.File;
 import java.util.*;
 
 import org.json.simple.JSONArray;
@@ -32,4 +35,22 @@ public class Application extends Controller {
     	RunExperiment.Run(n, arrayrow);
     }
     
+    public static void testFile() {
+    	render();
+    }
+    
+    public static void uploadPhotoFile(String abc) {
+    	List<Upload> files = (List<Upload>) request.args.get("__UPLOADS");
+    	String fileName = null;
+        for (Upload upload : files) {
+            if (upload.getSize() > 0) {
+                File f = upload.asFile();
+                long currentTime = System.currentTimeMillis();
+                fileName = currentTime + f.getName();
+                File storeFile = new File("./public/uploaddata/" + fileName);
+                Files.copy(f, storeFile);
+            }
+        }
+        renderText(fileName);
+    }
 }

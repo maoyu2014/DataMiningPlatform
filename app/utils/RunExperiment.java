@@ -30,6 +30,8 @@ public class RunExperiment {
 	    	JSONArray classArgumentValue = (JSONArray) operator.get("classArgumentValue");
 	    	JSONArray methodArgumentValue = (JSONArray) operator.get("methodArgumentValue");
 	    	
+//	    	System.out.println("~~~~~:	"+methodArgumentValue);
+	    	
 	    	Operator FactOperator = maps.get(operatorClass+"."+operatorMethod);
 	    	
     		FactOperator.classArgumentValue = classArgumentValue.toArray();
@@ -37,6 +39,8 @@ public class RunExperiment {
 	    	lists.add(FactOperator);
 		}
 		
+		/*
+		System.out.println("----------------------------------------------------------");
 		for (int i=0; i<n; i++) {
 			Operator o = lists.get(i);
 			System.out.println(o.operatorClass);
@@ -48,9 +52,10 @@ public class RunExperiment {
 			for (int j=0; j<o.methodArgumentValue.length; j++)
 				System.out.println(o.methodArgumentValue[j]);
 		}
+		System.out.println("----------------------------------------------------------");
+		*/
 		
-		
-//		coreRun(lists);
+		coreRun(lists);
 		
 	}
 
@@ -59,16 +64,19 @@ public class RunExperiment {
 	 */
 	private static void coreRun(List<Operator> lists) {
 		Object tempdata = null;
+		Class returnType = null;
 		for (int i=0; i<lists.size(); i++) {
 			Operator ooo = lists.get(i);
 			String s1 = ooo.operatorClass;
 			Class<?> c1 = null;
 			Method m1 = null;
 			Object o1 = null;
+			returnType = ooo.returnType;
 			
 			try {
 				c1 = Class.forName(s1);
 			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 				System.err.println("没找到这个类");
 			}
 			
@@ -76,34 +84,77 @@ public class RunExperiment {
 				m1 = c1.getMethod(ooo.operatorMethod, ooo.methodArgument);
 			} catch (NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
+				System.err.println("没找到这个方法");
 			}
 			
 			if (!Modifier.isStatic(m1.getModifiers())) {
 				Constructor<?> co = null;
 				try {
-						co = c1.getConstructor(ooo.classArgument);
+					co = c1.getConstructor(ooo.classArgument);
 				} catch (NoSuchMethodException | SecurityException e1) {
 					e1.printStackTrace();
+					System.err.println("没找到这个构造方法");
 				}
 	//			co.setAccessible(true);   
 				try {
-						o1 = co.newInstance(ooo.classArgumentValue);
+					Class[] classArgument = ooo.classArgument;
+					Object[] classArgumentValue = ooo.classArgumentValue;
+					for (int j=0; j<classArgument.length; j++) {
+						if (classArgument[j]==File.class) {
+							String fileName = (String) classArgumentValue[j];
+							classArgumentValue[j] = new File("./public/uploaddata/" + fileName);
+						} else if (classArgument[j]==int.class) {
+							classArgumentValue[j] = (int)(long) classArgumentValue[j];
+						} else if (classArgument[j]==String.class) {
+							classArgumentValue[j] = (String) classArgumentValue[j];
+						} else if (classArgument[j]==Dataset.class) {
+							classArgumentValue[j] = (Dataset) tempdata;
+						}
+					}
+					o1 = co.newInstance(classArgumentValue);
 				} catch (InstantiationException | IllegalAccessException  | IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
+					System.err.println("没找到这个对象");
 				}
 			}
 			
 			try {
-				tempdata = m1.invoke(o1, ooo.methodArgumentValue);
+				Class[] methodArgument = ooo.methodArgument;
+				Object[] methodArgumentValue = ooo.methodArgumentValue;
+				for (int j=0; j<methodArgument.length; j++) {
+					if (methodArgument[j]==File.class) {
+						String fileName = (String) methodArgumentValue[j];
+						methodArgumentValue[j] = new File("./public/uploaddata/" + fileName);
+					} else if (methodArgument[j]==int.class) {
+						methodArgumentValue[j] = (int)(long) methodArgumentValue[j];
+					} else if (methodArgument[j]==String.class) {
+						methodArgumentValue[j] = (String) methodArgumentValue[j];
+					} else if (methodArgument[j]==Dataset.class) {
+						methodArgumentValue[j] = (Dataset) tempdata;
+					}
+				}
+				tempdata = m1.invoke(o1, methodArgumentValue);
 			} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		Dataset[] clusters = (Dataset[]) tempdata;
-		for (Dataset clu : clusters) {
-        	System.out.println(clu);
-        }
+		if (returnType==Dataset.class) {
+			Dataset dataset = (Dataset) tempdata;
+			System.out.println(dataset);
+		} else if (returnType==Dataset[].class) {
+			Dataset[] clusters = (Dataset[]) tempdata;
+			System.out.println("============="+clusters.length);
+			for (Dataset clu : clusters) {
+	        	System.out.println(clu);
+	        	System.out.println("-------------------------------------------");
+	        }
+		}
+
+		
+		
+
+        
 	}
 	
 }
