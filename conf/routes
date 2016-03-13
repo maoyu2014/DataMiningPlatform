@@ -8,6 +8,7 @@ GET     /getAllOperators                        Application.getAllOperators
 GET     /acceptExperiment                       Application.acceptExperiment
 GET     /testFile                       		Application.testFile
 POST    /uploadPhotoFile                       	Application.uploadPhotoFile
+GET     /showResult                       		Application.showResult
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

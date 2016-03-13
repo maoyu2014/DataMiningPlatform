@@ -32,7 +32,13 @@ public class Application extends Controller {
     	Object obj=JSONValue.parse(rows);
     	JSONArray arrayrow=(JSONArray)obj;
     	int n = arrayrow.size();
-    	RunExperiment.Run(n, arrayrow);
+    	long key = RunExperiment.Run(n, arrayrow);
+    	renderText(key);
+    }
+    
+    public static void showResult(long key) {
+    	String result = ResultObj.results.get(key);
+    	renderText(result);
     }
     
     public static void testFile() {

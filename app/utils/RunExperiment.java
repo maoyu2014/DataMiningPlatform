@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.Operator;
+import models.ResultObj;
 import net.sf.javaml.core.Dataset;
 
 import org.json.simple.JSONArray;
@@ -17,7 +18,7 @@ import org.json.simple.JSONObject;
 
 public class RunExperiment {
 
-	public static void Run(int n, JSONArray arrayrow) {
+	public static long Run(int n, JSONArray arrayrow) {
 		List<Operator> lists = new ArrayList<>();
 		AllServerOperators allServerOperators = new AllServerOperators();
 		Map<String, Operator> maps = allServerOperators.maps;
@@ -55,14 +56,15 @@ public class RunExperiment {
 		System.out.println("----------------------------------------------------------");
 		*/
 		
-		coreRun(lists);
+		return coreRun(lists);
 		
 	}
 
 	/*
 	 * 利用反射机制进行运行
 	 */
-	private static void coreRun(List<Operator> lists) {
+	private static long coreRun(List<Operator> lists) {
+		String result = null;
 		Object tempdata = null;
 		Class returnType = null;
 		for (int i=0; i<lists.size(); i++) {
@@ -141,20 +143,23 @@ public class RunExperiment {
 		
 		if (returnType==Dataset.class) {
 			Dataset dataset = (Dataset) tempdata;
-			System.out.println(dataset);
+//			System.out.println(dataset);
+			result = dataset.toString();
 		} else if (returnType==Dataset[].class) {
 			Dataset[] clusters = (Dataset[]) tempdata;
-			System.out.println("============="+clusters.length);
+//			System.out.println("============="+clusters.length);
+			result += "聚为"+clusters.length+"类:\n";
 			for (Dataset clu : clusters) {
-	        	System.out.println(clu);
-	        	System.out.println("-------------------------------------------");
+//	        	System.out.println(clu);
+//	        	System.out.println("-------------------------------------------");
+				result += clu.toString() + "\n";
+				result += "-------------------------------------------\n";
 	        }
 		}
 
-		
-		
-
-        
+		long key =System.currentTimeMillis();
+		ResultObj.results.put(key, result);
+        return key;
 	}
 	
 }

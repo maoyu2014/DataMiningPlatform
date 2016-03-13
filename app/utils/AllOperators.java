@@ -23,7 +23,7 @@ public class AllOperators {
 		
 		AllServerOperators aso = new AllServerOperators();
 
-		fa = new OperatorFather(0, "数据操作", "open", null);
+		fa = new OperatorFather(0, "Data manipulation", "open", null);
 		fa.children = new ArrayList<>();
 		for (Operator operator : aso.lists) {
 			if (operator.category.equals(Category.categorys[0])) {
@@ -43,7 +43,7 @@ public class AllOperators {
 		}
 		lists.add(fa);
 
-		fa = new OperatorFather(1, "聚类", "open", null);
+		fa = new OperatorFather(1, "Clustering", "open", null);
 		fa.children = new ArrayList<>();
 		for (Operator operator : aso.lists) {
 			if (operator.category.equals(Category.categorys[1])) {
@@ -63,11 +63,11 @@ public class AllOperators {
 		}
 		lists.add(fa);
 
-		fa = new OperatorFather(2, "特征选择", "open", null);
+		fa = new OperatorFather(2, "Feature selection", "open", null);
 		fa.children = new ArrayList<>();
 		lists.add(fa);
 		
-		fa = new OperatorFather(3, "分类", "open", null);
+		fa = new OperatorFather(3, "Classification", "open", null);
 		fa.children = new ArrayList<>();
 		lists.add(fa);
 	}

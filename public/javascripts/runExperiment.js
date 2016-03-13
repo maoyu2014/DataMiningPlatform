@@ -15,6 +15,9 @@ function runExperiment01() {
 			},
 			function(data, status) {
 				alert(status);
+				var parameters = encodeURIComponent("key=" + data);
+				window.open("/showResult?key="+data,"xxoo","menubar=no, toolbar=no, location=no,directories=no, status=no, scrollbars=no, titlebar=yes, resizable=no, height=768 ,width=1024,top=0,left=0");  
+//				alert(data);
 			}); 
 	
 	/*
