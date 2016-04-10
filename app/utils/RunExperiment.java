@@ -19,9 +19,9 @@ import org.json.simple.JSONObject;
 public class RunExperiment {
 
 	public static long Run(int n, JSONArray arrayrow) {
+		
 		List<Operator> lists = new ArrayList<>();
-		AllServerOperators allServerOperators = new AllServerOperators();
-		Map<String, Operator> maps = allServerOperators.maps;
+		Map<String, Operator> maps = AllServerOperators.getMaps();
 		
 		for (int i=0; i<n; i++) {
 			JSONObject row=(JSONObject)arrayrow.get(i);

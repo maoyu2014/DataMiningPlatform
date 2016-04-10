@@ -12,13 +12,13 @@
 <body>
 
 <form id="ff" method="post" enctype="multipart/form-data">
-    <input type="file" name="photo" />
+    <input type="file" name="myimage" />
     <a href='#' class='easyui-linkbutton'  onclick='tempwork()'>我穿穿传</a>
 </form>
     <script>
     function tempwork() {
     	$("#ff").form({
-    	    url:"/uploadPhoto",
+    	    url:"@{Application.uploadFile()}",
     	    onSubmit: function(){
     	        // do some check
     	        // return false to prevent submit;

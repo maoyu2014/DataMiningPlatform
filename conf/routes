@@ -4,10 +4,8 @@
 
 # Home page
 GET     /                                       Application.index
-GET     /getAllOperators                        Application.getAllOperators
+POST    /uploadFile                       		Application.uploadFile
 GET     /acceptExperiment                       Application.acceptExperiment
-GET     /testFile                       		Application.testFile
-POST    /uploadPhotoFile                       	Application.uploadPhotoFile
 GET     /showResult                       		Application.showResult
 
 # Ignore favicon requests

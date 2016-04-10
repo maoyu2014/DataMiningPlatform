@@ -35,7 +35,7 @@ function loadOperatorParameter01(){
 				} else if (classFrontStyle[i]=="filebox") {
 					var temp = $("<p>"+classArgumentName[i]+":"+
 							"<form id='classff' method='post' enctype='multipart/form-data'>"+
-							"<input id=" + classinputformid + " name='photofile' class='easyui-filebox' >"+
+							"<input id=" + classinputformid + " name='mydatafile' class='easyui-filebox' >"+
 							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;' onclick='uploadClassFormFile("+i+")'>上传</a>"+
 							"</form>"+
 							"</p>");
@@ -67,7 +67,7 @@ function loadOperatorParameter01(){
 				} else if (methodFrontStyle[i]=="filebox") {
 					var temp = $("<p>"+methodArgumentName[i]+":"+
 							"<form id='methodff' method='post' enctype='multipart/form-data'>"+
-							"<input id=" + methodinputformid + " name='photofile' class='easyui-filebox' >"+
+							"<input id=" + methodinputformid + " name='mydatafile' class='easyui-filebox' >"+
 							"<a href='#' class='easyui-linkbutton' style='width:50px;margin-left:10px;' onclick='uploadMethodFormFile("+i+")'>上传</a>"+
 							"</form>"+
 							"</p>");
@@ -91,13 +91,17 @@ function loadOperatorParameter01(){
  */
 function uploadClassFormFile(iii) {
 	$("#classff").form({
-	    url:"/uploadPhotoFile",
-	    onSubmit: function(){
+	    url:"/uploadFile",
+	    onSubmit: function() {
 	        // do some check
 	        // return false to prevent submit;
 	    },
-	    success:function(data){
+	    success:function(data) {
 //	    	alert(data);
+	    	if (data=='nofile') {
+	    		alert("没有文件，上传失败");
+	    		return;
+	    	}
 	    	var row = $('#experdgid01').datagrid('getSelected');
 	    	var operator = row.operator;
 	    	var classArgumentValue = operator.classArgumentValue;
@@ -114,13 +118,17 @@ function uploadClassFormFile(iii) {
  */
 function uploadMethodFormFile(iii) {
 	$("#methodff").form({
-	    url:"/uploadPhotoFile",
+	    url:"/uploadFile",
 	    onSubmit: function(){
 	        // do some check
 	        // return false to prevent submit;
 	    },
-	    success:function(data){
+	    success:function(data) {
 //	    	alert(data);
+	    	if (data=='nofile') {
+	    		alert("没有文件，上传失败");
+	    		return;
+	    	}
 	    	var row = $('#experdgid01').datagrid('getSelected');
 	    	var operator = row.operator;
 	    	var methodArgumentValue = operator.methodArgumentValue;
@@ -181,13 +189,18 @@ function saveValueBack01(oldindex) {
 	//			var value = $("#"+inputformid).val();
 			}
 		}
-		
 		alert("保存成功");
 	} else {
 		alert("loadOperatorParameter.js函数:存回表单值时row没有发现");
 		alert("保存失败");
 	}
 }
+
+
+
+
+
+
 
 
 function loadOperatorParameter02(){

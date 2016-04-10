@@ -138,7 +138,7 @@
 		
 		$(function(){
 			
-			$.getJSON('/getAllOperators',function(data,status){
+			$.getJSON('@{Application.getAllOperators()}',function(data,status){
 				//构建算子树
 				$('#operatorTreeId').tree({
 					animate:true,
@@ -199,10 +199,6 @@
 		});
 		
 	</script>
-	
-	<div id="resultwindow">
-        
-    </div>
 	
 </body>
 </html>

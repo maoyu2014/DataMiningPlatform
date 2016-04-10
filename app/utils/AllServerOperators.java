@@ -12,15 +12,26 @@ import models.OperatorChild;
 import models.OperatorFather;
 
 /*
- * 后台所有算子的集合
- * 在构造函数中进行所有算子的初始化
+ * 后台所有完整算子的集合
  */
 public class AllServerOperators {
 	
-	public List<Operator> lists= null;
-	public Map<String, Operator> maps = null;
+	private AllServerOperators() {}
 	
-	public AllServerOperators() {
+	public static List<Operator> lists= null;
+	public static Map<String, Operator> maps = null;
+	
+	public static List<Operator> getLists() {
+		if (lists==null) setAllServerOperators();
+		return lists;
+	}
+	
+	public static Map<String, Operator> getMaps() {
+		if (maps==null) setAllServerOperators();
+		return maps;
+	}
+	
+	private static void setAllServerOperators() {
 		lists = new ArrayList<>();
 		maps = new HashMap<>();
 

@@ -12,20 +12,27 @@ import models.OperatorFather;
  * 传送到前端的用来展示的所有算子的集合
  * 由于数据量比较大，可能需要使用post方式
  */
-public class AllOperators {
-
-	public List<OperatorFather> lists= null;
+public class AllFrontOperators {
 	
-	public AllOperators() {
+	private AllFrontOperators() {}
+	
+	public static List<OperatorFather> lists= null;
+	
+	public static List<OperatorFather> getLists() {
+		if (lists==null) setAllFrontOperators();
+		return lists;
+	}
+	
+	private static void setAllFrontOperators() {
 		lists = new ArrayList<>();
 		OperatorFather fa = null;
 		OperatorChild ch = null;
 		
-		AllServerOperators aso = new AllServerOperators();
+		List<Operator> listO = AllServerOperators.getLists();
 
 		fa = new OperatorFather(0, "Data manipulation", "open", null);
 		fa.children = new ArrayList<>();
-		for (Operator operator : aso.lists) {
+		for (Operator operator : listO) {
 			if (operator.category.equals(Category.categorys[0])) {
 				ch = new OperatorChild();
 				ch.text = operator.name;
@@ -45,7 +52,7 @@ public class AllOperators {
 
 		fa = new OperatorFather(1, "Clustering", "open", null);
 		fa.children = new ArrayList<>();
-		for (Operator operator : aso.lists) {
+		for (Operator operator : listO) {
 			if (operator.category.equals(Category.categorys[1])) {
 				ch = new OperatorChild();
 				ch.text = operator.name;

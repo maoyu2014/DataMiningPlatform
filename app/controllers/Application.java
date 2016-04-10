@@ -4,7 +4,7 @@ import play.*;
 import play.data.Upload;
 import play.libs.Files;
 import play.mvc.*;
-import utils.AllOperators;
+import utils.AllFrontOperators;
 import utils.RunExperiment;
 
 import java.io.File;
@@ -23,9 +23,19 @@ public class Application extends Controller {
     }
 
     public static void getAllOperators() {
-    	AllOperators allOperators = new AllOperators();
-    	List<OperatorFather> lists = allOperators.lists;    	
-    	renderJSON(lists);
+    	List<OperatorFather> listOperatorFather = AllFrontOperators.getLists();
+    	renderJSON(listOperatorFather);
+    }
+    
+    public static void uploadFile(File mydatafile) {
+    	if (mydatafile!=null) {
+    		long currentTime = System.currentTimeMillis();
+	    	String fileName = currentTime + mydatafile.getName();
+	    	Files.copy(mydatafile, Play.getFile("public/uploaddata/" + fileName));
+	    	renderText(fileName);
+    	} else {
+    		renderText("nofile");
+    	}
     }
     
     public static void acceptExperiment(String rows) {
@@ -41,10 +51,24 @@ public class Application extends Controller {
     	renderText(result);
     }
     
-    public static void testFile() {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //文件上传测试页面
+    public static void testUpload() {
     	render();
     }
     
+    
+    //多文件上传测试
+    /*
     public static void uploadPhotoFile(String abc) {
     	List<Upload> files = (List<Upload>) request.args.get("__UPLOADS");
     	String fileName = null;
@@ -59,4 +83,7 @@ public class Application extends Controller {
         }
         renderText(fileName);
     }
+    */
+    
+    
 }
