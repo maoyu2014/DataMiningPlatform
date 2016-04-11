@@ -14,10 +14,12 @@ function runExperiment01() {
 				rows:JSON.stringify(rows)
 			},
 			function(data, status) {
-				alert(status);
-				var parameters = encodeURIComponent("key=" + data);
-				window.open("/showResult?key="+data, "", "");  
-//				alert(data);
+				if (status=='success') {
+//					var parameters = encodeURIComponent("key=" + data);
+					window.open("/showResult?key="+data, "", "");  
+				} else {
+					alert("运行失败");
+				}
 			}); 
 	
 	/*

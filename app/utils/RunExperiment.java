@@ -158,7 +158,8 @@ public class RunExperiment {
 		}
 
 		long key =System.currentTimeMillis();
-		ResultObj.results.put(key, result);
+		Map<Long, String> resultMaps = ResultObj.maps;
+		resultMaps.put(key, result);
         return key;
 	}
 	

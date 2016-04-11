@@ -80,6 +80,13 @@ function loadOperatorParameter01(){
 		var temp = $("<p>"+"<a href='#' class='easyui-linkbutton' style='width:80px;margin-top:5px;' onclick='saveValueBack01("+index+")'>保存</a>"+"</p>");
 		$("#argumentSetID").append(temp);
 		$.parser.parse("#argumentSetID");
+		
+		//显示操作到caozuoID中
+		var myDate = new Date();
+		var mytime = myDate.toLocaleTimeString();     //获取当前时间
+		var temp = $("<p>" + mytime + ":算子调参:" + name + "</p>");
+		$("#caozuoID").append(temp);
+		
 	} else {
 		alert("loadOperatorParameter.js函数:row没有发现");
 	}

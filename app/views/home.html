@@ -49,12 +49,13 @@
     <div data-options="region:'east',split:true" style="width:20%;">
 		<div class="easyui-layout" data-options="fit:true">
 			<div data-options="region:'center',title:'参数集'" style="">
-				
 				<div id="argumentSetID" style="margin-left:10px;color:blue;">
 				</div>
 			</div>
 			
 			<div data-options="region:'south',title:'运行|操作 日志',split:true" style="height:45%;">
+				<div id="caozuoID" style="margin-left:10px;color:blue;">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -138,6 +139,7 @@
 		
 		$(function(){
 			
+			//在html页面可以直接用Applicatoin加方法，但是在被包含的js文件中，则不行，必须在routes中配置好url
 			$.getJSON('@{Application.getAllOperators()}',function(data,status){
 				//构建算子树
 				$('#operatorTreeId').tree({

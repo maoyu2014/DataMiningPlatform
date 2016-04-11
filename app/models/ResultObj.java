@@ -12,6 +12,6 @@ import java.util.*;
  */
 public class ResultObj {
 	
-	public static Map<Long, String> results = new HashMap<>();
+	public static Map<Long, String> maps = new HashMap<>();
 
 }

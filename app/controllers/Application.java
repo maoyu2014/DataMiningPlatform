@@ -47,7 +47,9 @@ public class Application extends Controller {
     }
     
     public static void showResult(long key) {
-    	String result = ResultObj.results.get(key);
+    	Map<Long, String> resultMaps = ResultObj.maps;
+    	String result = resultMaps.get(key);
+    	resultMaps.remove(key);
     	renderText(result);
     }
     

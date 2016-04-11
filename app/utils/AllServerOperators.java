@@ -58,7 +58,7 @@ public class AllServerOperators {
 		
 		operator.name = "读取文件";
 		operator.description = "<p>DataManipulation-读取文件</p>" +
-								"<p>文件的格式为csv类格式，其中参数classIndex表示第几列是类型，参数separator表示数据的分隔符</p>";
+								"<p>文件的格式为csv类格式，其中参数classIndex表示第几列是类型，列数从0开始，参数separator表示数据的分隔符，一般csv文件多以“，”（逗号）作为分割符</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
@@ -107,7 +107,7 @@ public class AllServerOperators {
 				
 		operator.name = "KMeans算法";
 		operator.description = "<p>Clustering-KMeans算法</p>"+
-								"<p>经典的聚类算法啊，可以对一组数据进行聚类操作。参数clusters表示需要聚合成几类，参数iterations表示需要进行迭代的次数</p>";
+								"<p>经典的聚类算法啊，可以对一组数据进行聚类操作。参数clusters表示需要聚合成几类，参数iterations表示需要进行迭代的次数，觉得不需要修改可以不用调整</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
