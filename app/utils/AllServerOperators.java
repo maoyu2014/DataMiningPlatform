@@ -38,7 +38,7 @@ public class AllServerOperators {
 		Operator operator = null;
 
 		/*
-		 * DataManipulation-读取文件
+		 * 第0类：DataManipulation-读取文件
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[0];
@@ -58,12 +58,13 @@ public class AllServerOperators {
 		
 		operator.name = "读取文件";
 		operator.description = "<p>DataManipulation-读取文件</p>" +
-								"<p>文件的格式为csv类格式，其中参数classIndex表示第几列是类型，列数从0开始，参数separator表示数据的分隔符，一般csv文件多以“，”（逗号）作为分割符</p>";
+								"<p>文件的格式为csv类格式，其中参数classIndex表示第几列是类型，列数从0开始，参数separator表示数据的分隔符，一般csv文件多以“，”（逗号）作为分割符</p>" +
+								"<p>输入:文件、index、Seperator分隔符，输出:Dataset</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
-		 * DataManipulation-导出文件
+		 * 第0类：DataManipulation-导出文件
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[0];
@@ -87,7 +88,7 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
-		 * Clustering-KMeans算法
+		 * 第1类：Clustering-KMeans算法
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[1];
@@ -107,11 +108,91 @@ public class AllServerOperators {
 				
 		operator.name = "KMeans算法";
 		operator.description = "<p>Clustering-KMeans算法</p>"+
-								"<p>经典的聚类算法啊，可以对一组数据进行聚类操作。参数clusters表示需要聚合成几类，参数iterations表示需要进行迭代的次数，觉得不需要修改可以不用调整</p>";
+								"<p>经典的聚类算法啊，可以对一组数据进行聚类操作。参数clusters表示需要聚合成几类，参数iterations表示需要进行迭代的次数，觉得不需要修改可以不用调整</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
+		/*
+		 * 第1类：Clustering-AICScore评估算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "net.sf.javaml.clustering.evaluation.AICScore";
+		operator.operatorMethod = "score";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset[].class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = double.class;
+				
+		operator.name = "聚类AICScore评估";
+		operator.description = "<p>聚类AICScore评估</p>"+
+								"<p>对聚类的算法的聚类结果进行评估，得到一个double类型的score值表示结果</p>" + 
+								"<p>输入:Dataset[]数组，输出:double</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		
+		/*
+		 * 第1类：Clustering-BICScore评估算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "net.sf.javaml.clustering.evaluation.BICScore";
+		operator.operatorMethod = "score";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset[].class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = double.class;
+				
+		operator.name = "聚类BICScore评估";
+		operator.description = "<p>聚类BICScore评估</p>"+
+								"<p>对聚类的算法的聚类结果进行评估，得到一个double类型的score值表示结果</p>" +
+								"<p>输入:Dataset[]数组，输出:double</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		
+		/*
+		 * 第1类：Clustering-SumOfSquaredErrors评估算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "net.sf.javaml.clustering.evaluation.SumOfSquaredErrors";
+		operator.operatorMethod = "score";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset[].class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = double.class;
+				
+		operator.name = "聚类SumOfSquaredErrors评估";
+		operator.description = "<p>聚类SumOfSquaredErrors评估</p>"+
+								"<p>对聚类的算法的聚类结果进行评估，得到一个double类型的score值表示结果</p>" +
+								"<p>输入:Dataset[]数组，输出:double</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
 	}

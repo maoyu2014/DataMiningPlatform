@@ -111,6 +111,8 @@ public class RunExperiment {
 							classArgumentValue[j] = (String) classArgumentValue[j];
 						} else if (classArgument[j]==Dataset.class) {
 							classArgumentValue[j] = (Dataset) tempdata;
+						} else if (classArgument[j]==Dataset[].class) {
+							classArgumentValue[j] = (Dataset[]) tempdata;
 						}
 					}
 					o1 = co.newInstance(classArgumentValue);
@@ -133,13 +135,18 @@ public class RunExperiment {
 						methodArgumentValue[j] = (String) methodArgumentValue[j];
 					} else if (methodArgument[j]==Dataset.class) {
 						methodArgumentValue[j] = (Dataset) tempdata;
+					} else if (methodArgument[j]==Dataset[].class) {
+						methodArgumentValue[j] = (Dataset[]) tempdata;
 					}
 				}
 				tempdata = m1.invoke(o1, methodArgumentValue);
 			} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException e) {
 				e.printStackTrace();
 			}
+			
+			
 		}
+		
 		
 		if (returnType==Dataset.class) {
 			Dataset dataset = (Dataset) tempdata;
@@ -148,13 +155,16 @@ public class RunExperiment {
 		} else if (returnType==Dataset[].class) {
 			Dataset[] clusters = (Dataset[]) tempdata;
 //			System.out.println("============="+clusters.length);
-			result += "聚为"+clusters.length+"类:\n";
+			result = "聚为" + clusters.length + "类:\n";
 			for (Dataset clu : clusters) {
 //	        	System.out.println(clu);
 //	        	System.out.println("-------------------------------------------");
 				result += clu.toString() + "\n";
 				result += "-------------------------------------------\n";
 	        }
+		} else if (returnType==double.class) {
+			double scorevalue = (double) tempdata;
+			result = String.valueOf(scorevalue);
 		}
 
 		long key =System.currentTimeMillis();
@@ -162,5 +172,6 @@ public class RunExperiment {
 		resultMaps.put(key, result);
         return key;
 	}
+
 	
 }

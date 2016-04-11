@@ -8,7 +8,7 @@ function runExperiment01() {
 		alert("没有任何算子！");
 		return;
 	}
-	$.get(
+	$.post(
 			'/acceptExperiment',
 			{
 				rows:JSON.stringify(rows)
