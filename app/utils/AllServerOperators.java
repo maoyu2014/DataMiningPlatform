@@ -38,7 +38,7 @@ public class AllServerOperators {
 		Operator operator = null;
 
 		/*
-		 * 第0类：DataManipulation-读取文件
+		 * 第0类：DataManipulation--读取文件
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[0];
@@ -52,19 +52,19 @@ public class AllServerOperators {
 		
 		operator.methodArgument = new Class[] {File.class, int.class, String.class};
 		operator.methodArgumentName = new String[] {"inputfile", "classIndex", "separator"};
-		operator.methodArgumentValue = new Object[] {null, -1, "\\t"};
+		operator.methodArgumentValue = new Object[] {null, -1, ","};
 		operator.methodFrontStyle = new String[] {"filebox", "numberbox", "textbox"};
 		operator.returnType = Dataset.class;
 		
 		operator.name = "读取文件";
 		operator.description = "<p>DataManipulation-读取文件</p>" +
-								"<p>文件的格式为csv类格式，其中参数classIndex表示第几列是类型，列数从0开始，参数separator表示数据的分隔符，一般csv文件多以“，”（逗号）作为分割符</p>" +
-								"<p>输入:文件、index、Seperator分隔符，输出:Dataset</p>";
+								"<p>文件的格式为csv类格式，其中参数classIndex表示第几列是类型，列数从0开始，参数separator表示数据的分隔符，一般csv文件多以（逗号、分号、tab）作为分割符。输入文件中只有class label可以是非数字的</p>" +
+								"<p>输入:文件、index、Seperator，输出:Dataset</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
-		 * 第0类：DataManipulation-导出文件
+		 * 第0类：DataManipulation--导出文件
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[0];
@@ -76,16 +76,72 @@ public class AllServerOperators {
 		operator.classArgumentValue = new Object[] {};
 		operator.classFrontStyle = new String[] {};
 		
-		operator.methodArgument = new Class[] {Dataset.class, File.class};
-		operator.methodArgumentName = new String[] {"data", "outputfile"};
-		operator.methodArgumentValue = new Object[] {};
-		operator.methodFrontStyle = new String[] {"inner-data", "filebox"};
+		operator.methodArgument = new Class[] {Dataset.class, File.class, boolean.class, String.class};
+		operator.methodArgumentName = new String[] {"data", "outFileName", "compress", "separator"};
+		operator.methodArgumentValue = new Object[] {null, null, false, ","};
+		operator.methodFrontStyle = new String[] {"inner-data", "textbox", "textbox", "textbox"};
 		operator.returnType = void.class;
 		
 		operator.name = "导出文件";
-		operator.description = "DataManipulation-导出文件";
+		operator.description = "<p>DataManipulation-导出文件</p>" +
+				"<p>文件的格式为csv-like格式，其中参数data表示要输出的数据，outFile表示输出的文件名，compress表示是否压缩（默认false不压缩,或者true压缩），参数separator表示数据的分隔符，一般csv文件多以（逗号、分号、tab）作为分割符。输出文件中class label默认出现在第0列</p>" +
+				"<p>输入:Dataset，输出:File</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第0类：DataManipulation--NormalizeMidrange归一化训练
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[0];
+		operator.operatorClass = "net.sf.javaml.filter.normalize.NormalizeMidrange";
+		operator.operatorMethod = "build";
+		
+		operator.classArgument = new Class[] {double.class, double.class};
+		operator.classArgumentName = new String[] {"middle", "range"};
+		operator.classArgumentValue = new Object[] { 0, 2 };
+		operator.classFrontStyle = new String[] {"numberbox","numberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
+		
+		operator.name = "Midrange归一化训练";
+		operator.description = "<p>DataManipulation-NormalizeMidrange归一化训练</p>" +
+				"<p>对输入的Dataset数据进行标准化训练，在应用它到具体数据上之前，需要使用本算子到一个Dataset来确定每一列合适的mid-ranges。比如，对于 mid-range 0和range 2，将产生range[-1,1]</p>" +
+				"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第0类：DataManipulation--NormalizeMidrange归一化应用
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[0];
+		operator.operatorClass = "net.sf.javaml.filter.normalize.NormalizeMidrange";
+		operator.operatorMethod = "filter";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
+		
+		operator.name = "Midrange归一化使用";
+		operator.description = "<p>DataManipulation-NormalizeMidrange归一化使用</p>" +
+				"<p>对输入的Dataset数据进行标准化，标准化结束之后，被标准化的数据Dataset将会改变</p>" +
+				"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		
 		
 		/*
 		 * 第1类：Clustering-KMeans算法
@@ -193,6 +249,11 @@ public class AllServerOperators {
 								"<p>输入:Dataset[]数组，输出:double</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		
+		
+		
+		
 		
 		
 	}

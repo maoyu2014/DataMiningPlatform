@@ -113,6 +113,8 @@ public class RunExperiment {
 							classArgumentValue[j] = (Dataset) tempdata;
 						} else if (classArgument[j]==Dataset[].class) {
 							classArgumentValue[j] = (Dataset[]) tempdata;
+						} else if (classArgument[j]==boolean.class) {
+							classArgumentValue[j] = Boolean.parseBoolean((String)classArgumentValue[j]);
 						}
 					}
 					o1 = co.newInstance(classArgumentValue);
@@ -137,6 +139,8 @@ public class RunExperiment {
 						methodArgumentValue[j] = (Dataset) tempdata;
 					} else if (methodArgument[j]==Dataset[].class) {
 						methodArgumentValue[j] = (Dataset[]) tempdata;
+					} else if (methodArgument[j]==boolean.class) {
+						methodArgumentValue[j] = Boolean.parseBoolean((String)methodArgumentValue[j]);
 					}
 				}
 				tempdata = m1.invoke(o1, methodArgumentValue);
@@ -165,6 +169,9 @@ public class RunExperiment {
 		} else if (returnType==double.class) {
 			double scorevalue = (double) tempdata;
 			result = String.valueOf(scorevalue);
+		} else if (returnType==void.class) {
+			//void目前只有导出数据是的
+			result="导出数据执行完成";
 		}
 
 		long key =System.currentTimeMillis();
