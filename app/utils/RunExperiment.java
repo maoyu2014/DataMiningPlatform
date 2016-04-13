@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,10 +35,24 @@ public class RunExperiment {
 //	    	System.out.println("~~~~~:	"+methodArgumentValue);
 	    	
 	    	Operator FactOperator = maps.get(operatorClass+"."+operatorMethod);
+	    	//本来打算用深拷贝，但是由于主要就是classArgumentValue和methodArgumentValue是关键，所以就偷懒这么搞了
+	    	Operator FactOperatorToUse= new Operator();
+	    	FactOperatorToUse.category = FactOperator.category;
+	    	FactOperatorToUse.operatorClass = FactOperator.operatorClass;
+	    	FactOperatorToUse.operatorMethod = FactOperator.operatorMethod;
+	    	FactOperatorToUse.classArgument = FactOperator.classArgument;
+	    	FactOperatorToUse.classArgumentName = FactOperator.classArgumentName;
+	    	FactOperatorToUse.classFrontStyle = FactOperator.classFrontStyle;
+	    	FactOperatorToUse.methodArgument = FactOperator.methodArgument;
+	    	FactOperatorToUse.methodArgumentName = FactOperator.methodArgumentName;
+	    	FactOperatorToUse.methodFrontStyle = FactOperator.methodFrontStyle;
+	    	FactOperatorToUse.returnType = FactOperator.returnType;
+	    	FactOperatorToUse.name = FactOperator.name;
+	    	FactOperatorToUse.description = FactOperator.description;
 	    	
-    		FactOperator.classArgumentValue = classArgumentValue.toArray();
-    		FactOperator.methodArgumentValue = methodArgumentValue.toArray();
-	    	lists.add(FactOperator);
+	    	FactOperatorToUse.classArgumentValue = classArgumentValue.toArray();
+	    	FactOperatorToUse.methodArgumentValue = methodArgumentValue.toArray();
+	    	lists.add(FactOperatorToUse);
 		}
 		
 		/*
@@ -67,8 +82,10 @@ public class RunExperiment {
 		String result = null;
 		Object tempdata = null;
 		Class returnType = null;
+		Operator ooo = null;
+		Map<String, Object> mapObj = new HashMap<>();
 		for (int i=0; i<lists.size(); i++) {
-			Operator ooo = lists.get(i);
+			ooo = lists.get(i);
 			String s1 = ooo.operatorClass;
 			Class<?> c1 = null;
 			Method m1 = null;
@@ -90,37 +107,43 @@ public class RunExperiment {
 			}
 			
 			if (!Modifier.isStatic(m1.getModifiers())) {
-				Constructor<?> co = null;
-				try {
-					co = c1.getConstructor(ooo.classArgument);
-				} catch (NoSuchMethodException | SecurityException e1) {
-					e1.printStackTrace();
-					System.err.println("没找到这个构造方法");
-				}
-	//			co.setAccessible(true);   
-				try {
-					Class[] classArgument = ooo.classArgument;
-					Object[] classArgumentValue = ooo.classArgumentValue;
-					for (int j=0; j<classArgument.length; j++) {
-						if (classArgument[j]==File.class) {
-							String fileName = (String) classArgumentValue[j];
-							classArgumentValue[j] = new File("./public/uploaddata/" + fileName);
-						} else if (classArgument[j]==int.class) {
-							classArgumentValue[j] = (int)(long) classArgumentValue[j];
-						} else if (classArgument[j]==String.class) {
-							classArgumentValue[j] = (String) classArgumentValue[j];
-						} else if (classArgument[j]==Dataset.class) {
-							classArgumentValue[j] = (Dataset) tempdata;
-						} else if (classArgument[j]==Dataset[].class) {
-							classArgumentValue[j] = (Dataset[]) tempdata;
-						} else if (classArgument[j]==boolean.class) {
-							classArgumentValue[j] = Boolean.parseBoolean((String)classArgumentValue[j]);
-						}
+				if (mapObj.containsKey(s1)) {
+					o1 = mapObj.get(s1);
+				} else {
+					Constructor<?> co = null;
+					try {
+						co = c1.getConstructor(ooo.classArgument);
+					} catch (NoSuchMethodException | SecurityException e1) {
+						e1.printStackTrace();
+						System.err.println("没找到这个构造方法");
 					}
-					o1 = co.newInstance(classArgumentValue);
-				} catch (InstantiationException | IllegalAccessException  | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-					System.err.println("没找到这个对象");
+		//			co.setAccessible(true);   
+					try {
+						Class[] classArgument = ooo.classArgument;
+						Object[] classArgumentValue = ooo.classArgumentValue;
+						for (int j=0; j<classArgument.length; j++) {
+							if (classArgument[j]==File.class) {
+								String fileName = (String) classArgumentValue[j];
+								classArgumentValue[j] = new File("./public/uploaddata/" + fileName);
+							} else if (classArgument[j]==int.class) {
+								classArgumentValue[j] = (int)(long) classArgumentValue[j];
+							} else if (classArgument[j]==String.class) {
+								classArgumentValue[j] = (String) classArgumentValue[j];
+							} else if (classArgument[j]==Dataset.class) {
+								classArgumentValue[j] = (Dataset) tempdata;
+							} else if (classArgument[j]==Dataset[].class) {
+								classArgumentValue[j] = (Dataset[]) tempdata;
+							} else if (classArgument[j]==boolean.class) {
+								if (!(classArgumentValue[j] instanceof Boolean))
+									classArgumentValue[j] = Boolean.parseBoolean((String)classArgumentValue[j]);
+							}
+						}
+						o1 = co.newInstance(classArgumentValue);
+						mapObj.put(s1, o1);
+					} catch (InstantiationException | IllegalAccessException  | IllegalArgumentException | InvocationTargetException e) {
+						e.printStackTrace();
+						System.err.println("没找到这个对象");
+					}
 				}
 			}
 			
@@ -140,10 +163,15 @@ public class RunExperiment {
 					} else if (methodArgument[j]==Dataset[].class) {
 						methodArgumentValue[j] = (Dataset[]) tempdata;
 					} else if (methodArgument[j]==boolean.class) {
-						methodArgumentValue[j] = Boolean.parseBoolean((String)methodArgumentValue[j]);
+						if (!(methodArgumentValue[j] instanceof Boolean))
+							methodArgumentValue[j] = Boolean.parseBoolean((String)methodArgumentValue[j]);
 					}
 				}
-				tempdata = m1.invoke(o1, methodArgumentValue);
+				if (returnType==void.class) {
+					Object obj = m1.invoke(o1, methodArgumentValue);
+				} else {
+					tempdata = m1.invoke(o1, methodArgumentValue);
+				}
 			} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException e) {
 				e.printStackTrace();
 			}
@@ -151,7 +179,7 @@ public class RunExperiment {
 			
 		}
 		
-		
+		/*
 		if (returnType==Dataset.class) {
 			Dataset dataset = (Dataset) tempdata;
 //			System.out.println(dataset);
@@ -173,7 +201,45 @@ public class RunExperiment {
 			//void目前只有导出数据是的
 			result="导出数据执行完成";
 		}
-
+		*/
+		
+		if (ooo.operatorClass.equals("net.sf.javaml.tools.data.FileHandler") && ooo.operatorMethod.equals("loadDataset")) {
+			//导入数据
+			Dataset dataset = (Dataset) tempdata;
+			result = dataset.toString();
+		} else if (ooo.operatorClass.equals("net.sf.javaml.tools.data.FileHandler") && ooo.operatorMethod.equals("exportDataset")) {
+			//导出数据
+			result="导出数据执行完成";
+		} else if (ooo.operatorClass.equals("net.sf.javaml.clustering.KMeans") && ooo.operatorMethod.equals("cluster")) {
+			//Kmean聚类
+			Dataset[] clusters = (Dataset[]) tempdata;
+			result = "聚为" + clusters.length + "类:\n";
+			for (Dataset clu : clusters) {
+				result += clu.toString() + "\n";
+				result += "-------------------------------------------\n";
+	        }
+		} else if ( (ooo.operatorClass.equals("net.sf.javaml.clustering.evaluation.AICScore") || ooo.operatorClass.equals("net.sf.javaml.clustering.evaluation.BICScore") || ooo.operatorClass.equals("net.sf.javaml.clustering.evaluation.SumOfSquaredErrors") ) && ooo.operatorMethod.equals("score")) {
+			//聚类评估
+			double scorevalue = (double) tempdata;
+			result = String.valueOf(scorevalue);
+		} else if (ooo.operatorClass.equals("net.sf.javaml.filter.normalize.NormalizeMidrange") && ooo.operatorMethod.equals("filter")) {
+			//归一化Midrange
+			Dataset dataset = (Dataset) tempdata;
+			result = dataset.toString();
+		} else if (ooo.operatorClass.equals("net.sf.javaml.featureselection.scoring.GainRatio") && ooo.operatorMethod.equals("score")) {
+			double scorevalue = (double) tempdata;
+			result = String.valueOf(scorevalue);
+		} else if (ooo.operatorClass.equals("net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM") && ooo.operatorMethod.equals("rank")) {
+			int scorevalue = (int) tempdata;
+			result = String.valueOf(scorevalue);
+		} else if (ooo.operatorClass.equals("") && ooo.operatorMethod.equals("")) {
+			
+		} else {
+			result="实验不完整，无结果!";
+		}
+		
+		
+		
 		long key =System.currentTimeMillis();
 		Map<Long, String> resultMaps = ResultObj.maps;
 		resultMaps.put(key, result);

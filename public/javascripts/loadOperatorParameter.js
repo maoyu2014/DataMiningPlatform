@@ -29,8 +29,11 @@ function loadOperatorParameter01(){
 				if (classFrontStyle[i]=="textbox") {
 					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-textbox' value="+value+"></p>");
 					$("#argumentSetID").append(temp);
-				} else if (classFrontStyle[i]=="numberbox") {
+				} else if (classFrontStyle[i]=="intnumberbox") {
 					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-numberbox' value="+value+"></p>");
+					$("#argumentSetID").append(temp);
+				} else if (classFrontStyle[i]=="doublenumberbox") {
+					var temp = $("<p>"+classArgumentName[i]+":<br/><input id=" + classinputformid + " class='easyui-numberbox' data-options='precision:2' value="+value+"></p>");
 					$("#argumentSetID").append(temp);
 				} else if (classFrontStyle[i]=="filebox") {
 					var temp = $("<p>"+classArgumentName[i]+":"+
@@ -61,8 +64,11 @@ function loadOperatorParameter01(){
 				if (methodFrontStyle[i]=="textbox") {
 					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-textbox' value="+value+"></p>");
 					$("#argumentSetID").append(temp);
-				} else if (methodFrontStyle[i]=="numberbox") {
+				} else if (methodFrontStyle[i]=="intnumberbox") {
 					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-numberbox' value="+value+"></p>");
+					$("#argumentSetID").append(temp);
+				} else if (methodFrontStyle[i]=="doublenumberbox") {
+					var temp = $("<p>"+methodArgumentName[i]+":<br/><input id=" + methodinputformid + " class='easyui-numberbox' data-options='precision:2' value="+value+"></p>");
 					$("#argumentSetID").append(temp);
 				} else if (methodFrontStyle[i]=="filebox") {
 					var temp = $("<p>"+methodArgumentName[i]+":"+
@@ -171,9 +177,12 @@ function saveValueBack01(oldindex) {
 				if (classFrontStyle[i]=="textbox") {
 					value = $("#"+classinputformid).textbox('getValue');
 					classArgumentValue[i] = value;
-				} else if (classFrontStyle[i]=="numberbox") {
+				} else if (classFrontStyle[i]=="intnumberbox") {
 					value = $("#"+classinputformid).numberbox('getValue');
 					classArgumentValue[i] = parseInt(value);
+				} else if (classFrontStyle[i]=="doublenumberbox") {
+					value = $("#"+classinputformid).numberbox('getValue');
+					classArgumentValue[i] = parseFloat(value);
 				}
 			}
 		}
@@ -189,9 +198,12 @@ function saveValueBack01(oldindex) {
 				if (methodFrontStyle[i]=="textbox") {
 					value = $("#"+methodinputformid).textbox('getValue');
 					methodArgumentValue[i] = value;
-				} else if (methodFrontStyle[i]=="numberbox") {
+				} else if (methodFrontStyle[i]=="intnumberbox") {
 					value = $("#"+methodinputformid).numberbox('getValue');
 					methodArgumentValue[i] = parseInt(value);
+				} else if (methodFrontStyle[i]=="doublenumberbox") {
+					value = $("#"+methodinputformid).numberbox('getValue');
+					methodArgumentValue[i] = parseFloat(value);
 				}
 	//			var value = $("#"+inputformid).val();
 			}

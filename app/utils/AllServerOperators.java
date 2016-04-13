@@ -53,7 +53,7 @@ public class AllServerOperators {
 		operator.methodArgument = new Class[] {File.class, int.class, String.class};
 		operator.methodArgumentName = new String[] {"inputfile", "classIndex", "separator"};
 		operator.methodArgumentValue = new Object[] {null, -1, ","};
-		operator.methodFrontStyle = new String[] {"filebox", "numberbox", "textbox"};
+		operator.methodFrontStyle = new String[] {"filebox", "intnumberbox", "textbox"};
 		operator.returnType = Dataset.class;
 		
 		operator.name = "读取文件";
@@ -100,7 +100,7 @@ public class AllServerOperators {
 		operator.classArgument = new Class[] {double.class, double.class};
 		operator.classArgumentName = new String[] {"middle", "range"};
 		operator.classArgumentValue = new Object[] { 0, 2 };
-		operator.classFrontStyle = new String[] {"numberbox","numberbox"};
+		operator.classFrontStyle = new String[] {"doublenumberbox","doublenumberbox"};
 		
 		operator.methodArgument = new Class[] {Dataset.class};
 		operator.methodArgumentName = new String[] {"data"};
@@ -154,7 +154,7 @@ public class AllServerOperators {
 		operator.classArgument = new Class[] {int.class, int.class};
 		operator.classArgumentName = new String[] {"clusters", "iterations"};
 		operator.classArgumentValue = new Object[] {4,100};
-		operator.classFrontStyle = new String[] {"numberbox", "numberbox"};
+		operator.classFrontStyle = new String[] {"intnumberbox", "intnumberbox"};
 		
 		operator.methodArgument = new Class[] {Dataset.class};
 		operator.methodArgumentName = new String[] {"data"};
@@ -251,6 +251,109 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
+		/*
+		 * 第2类：FeatureSelection--Scoring特征得分训练
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[2];
+		operator.operatorClass = "net.sf.javaml.featureselection.scoring.GainRatio";
+		operator.operatorMethod = "build";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
+				
+		operator.name = "GainRatio特征得分训练";
+		operator.description = "<p>GainRatio特征得分训练</p>"+
+								"<p>对一个Dataset的数据进行特征评估训练，训练完以后，用score对某一列（从0开始）评估，可以得到得分，score越高越好</p>" +
+								"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第2类：FeatureSelection--Scoring特征得分使用
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[2];
+		operator.operatorClass = "net.sf.javaml.featureselection.scoring.GainRatio";
+		operator.operatorMethod = "score";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {int.class};
+		operator.methodArgumentName = new String[] {"attributeIndex"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"intnumberbox"};
+		operator.returnType = double.class;
+		
+		operator.name = "GainRatio特征得分使用";
+		operator.description = "<p>GainRatio特征得分使用</p>"+
+								"<p>对一个Dataset的数据的某一列进行评估，参数attributeIndex表示具体的某一列index，（从0开始），结果就是一个分值，得分越高越好</p>" +
+								"<p>输入:int，输出:double</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第2类：FeatureSelection--Ranking特征排名训练
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[2];
+		operator.operatorClass = "net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM";
+		operator.operatorMethod = "build";
+		
+		operator.classArgument = new Class[] {double.class, boolean.class, int.class};
+		operator.classArgumentName = new String[] {"removePercentage", "optimize", "internalFolds"};
+		operator.classArgumentValue = new Object[] {0.2, false, 4};
+		operator.classFrontStyle = new String[] {"doublenumberbox", "textbox", "intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
+				
+		operator.name = "RecursiveFeatureEliminationSVM特征排名训练";
+		operator.description = "<p>RecursiveFeatureEliminationSVM特征评估训练</p>"+
+								"<p>对一个Dataset的数据进行特征评估训练，训练完以后，用score对某一列（从0开始）评估，可以得到ranking排名，ranking越低越好</p>" +
+								"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第2类：FeatureSelection--Ranking特征排名使用
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[2];
+		operator.operatorClass = "net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM";
+		operator.operatorMethod = "rank";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {int.class};
+		operator.methodArgumentName = new String[] {"attributeIndex"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"intnumberbox"};
+		operator.returnType = int.class;
+		
+		operator.name = "RecursiveFeatureEliminationSVM特征排名使用";
+		operator.description = "<p>RecursiveFeatureEliminationSVM特征评估使用</p>"+
+								"<p>对一个Dataset的数据的某一列进行评估，参数attributeIndex表示具体的某一列index，（从0开始），结果得到ranking排名，ranking越低越好</p>" +
+								"<p>输入:int，输出:double</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
 		
