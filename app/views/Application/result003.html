@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Spare3.0</title>
+	<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+    #{get 'moreStyles' /}
+	<link rel="stylesheet" type="text/css" href="@{'/public/jquery-easyui-1.4.4/themes/default/easyui.css'}">
+	<link rel="stylesheet" type="text/css" href="@{'/public/jquery-easyui-1.4.4/themes/icon.css'}">
+   
+    #{get 'moreScripts' /}
+	<script type="text/javascript" src="@{'/public/jquery-easyui-1.4.4/jquery.min.js'}"></script> 
+	<script type="text/javascript" src="@{'/public/jquery-easyui-1.4.4/jquery.easyui.min.js'}"></script>
+</head>
+
+<body>
+
+	<div style="font-size:30px;color:blue;text-align:center;">聚类结果为${count}类</div>
+	<table class="easyui-datagrid" data-options="fitColumns:true,singleSelect:true,striped:true,rownumbers:true">
+	    <thead>
+	    	<tr>
+	    	#{list items:1..count, as:'i'}
+	            <th data-options="field:'record${i}',width:80">第${i}类</th>
+	        #{/list}
+	        </tr>
+	    </thead>
+	    <tbody>
+	    	#{list items:0..length-1, as:'i'}
+    		<tr>
+	    		#{list items:0..count-1, as:'k'}
+	    			<td>
+	    				#{if i < lists.get(k).size()}
+	    					${lists[k][i]}
+	    				#{/if}
+	    			</td>
+	    		#{/list}
+    		</tr>
+    		#{/list}
+	    </tbody>
+	</table>
+	
+</body>
+</html>
+

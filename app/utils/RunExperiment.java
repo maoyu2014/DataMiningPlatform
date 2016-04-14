@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
 
 public class RunExperiment {
 
-	public static long Run(int n, JSONArray arrayrow) {
+	public static String Run(int n, JSONArray arrayrow) {
 		
 		List<Operator> lists = new ArrayList<>();
 		Map<String, Operator> maps = AllServerOperators.getMaps();
@@ -78,7 +78,7 @@ public class RunExperiment {
 	/*
 	 * 利用反射机制进行运行
 	 */
-	private static long coreRun(List<Operator> lists) {
+	private static String coreRun(List<Operator> lists) {
 		String result = null;
 		Object tempdata = null;
 		Class returnType = null;
@@ -203,45 +203,56 @@ public class RunExperiment {
 		}
 		*/
 		
+		int casenum = 0;
 		if (ooo.operatorClass.equals("net.sf.javaml.tools.data.FileHandler") && ooo.operatorMethod.equals("loadDataset")) {
 			//导入数据
+			casenum=1;
 			Dataset dataset = (Dataset) tempdata;
 			result = dataset.toString();
 		} else if (ooo.operatorClass.equals("net.sf.javaml.tools.data.FileHandler") && ooo.operatorMethod.equals("exportDataset")) {
 			//导出数据
+			casenum=2;
 			result="导出数据执行完成";
 		} else if (ooo.operatorClass.equals("net.sf.javaml.clustering.KMeans") && ooo.operatorMethod.equals("cluster")) {
 			//Kmean聚类
+			casenum=3;
 			Dataset[] clusters = (Dataset[]) tempdata;
-			result = "聚为" + clusters.length + "类:\n";
+			result = clusters.length+"类";
 			for (Dataset clu : clusters) {
-				result += clu.toString() + "\n";
-				result += "-------------------------------------------\n";
+				result += clu.toString() + ";;";
 	        }
 		} else if ( (ooo.operatorClass.equals("net.sf.javaml.clustering.evaluation.AICScore") || ooo.operatorClass.equals("net.sf.javaml.clustering.evaluation.BICScore") || ooo.operatorClass.equals("net.sf.javaml.clustering.evaluation.SumOfSquaredErrors") ) && ooo.operatorMethod.equals("score")) {
 			//聚类评估
+			casenum=4;
 			double scorevalue = (double) tempdata;
 			result = String.valueOf(scorevalue);
 		} else if (ooo.operatorClass.equals("net.sf.javaml.filter.normalize.NormalizeMidrange") && ooo.operatorMethod.equals("filter")) {
 			//归一化Midrange
+			casenum=5;
 			Dataset dataset = (Dataset) tempdata;
 			result = dataset.toString();
 		} else if (ooo.operatorClass.equals("net.sf.javaml.featureselection.scoring.GainRatio") && ooo.operatorMethod.equals("score")) {
+			//对列进行评分
+			casenum=6;
 			double scorevalue = (double) tempdata;
 			result = String.valueOf(scorevalue);
 		} else if (ooo.operatorClass.equals("net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM") && ooo.operatorMethod.equals("rank")) {
-			int scorevalue = (int) tempdata;
-			result = String.valueOf(scorevalue);
+			//对列进行ranking
+			casenum=7;
+			int rankvalue = (int) tempdata;
+			result = String.valueOf(rankvalue);
 		} else if (ooo.operatorClass.equals("") && ooo.operatorMethod.equals("")) {
 			
 		} else {
+			casenum=-1;
 			result="实验不完整，无结果!";
 		}
 		
 		
 		
-		long key =System.currentTimeMillis();
-		Map<Long, String> resultMaps = ResultObj.maps;
+		long keyvalue =System.currentTimeMillis();
+		String key = keyvalue+":"+casenum;
+		Map<String, String> resultMaps = ResultObj.maps;
 		resultMaps.put(key, result);
         return key;
 	}

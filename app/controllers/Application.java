@@ -42,15 +42,47 @@ public class Application extends Controller {
     	Object obj=JSONValue.parse(rows);
     	JSONArray arrayrow=(JSONArray)obj;
     	int n = arrayrow.size();
-    	long key = RunExperiment.Run(n, arrayrow);
+    	String key = RunExperiment.Run(n, arrayrow);
     	renderText(key);
     }
     
-    public static void showResult(long key) {
-    	Map<Long, String> resultMaps = ResultObj.maps;
+    public static void showResult(String key) {
+    	Map<String, String> resultMaps = ResultObj.maps;
     	String result = resultMaps.get(key);
     	resultMaps.remove(key);
-    	renderText(result);
+    	String[] str = key.split(":");
+    	int casenum = Integer.parseInt(str[1]);
+    	
+    	if (casenum==1) {
+    		String[] tmp = result.substring(1,result.length()-1).split("}, ");
+    		for (int i=0; i<tmp.length; i++) {
+    			tmp[i] = tmp[i].substring(1);
+    			if (i==tmp.length-1) tmp[i] =  tmp[i].substring(0, tmp[i].length()-1);
+    		}
+    		render("Application/result001.html",tmp);
+    	} 
+    	else if (casenum==3) {
+    		String[] temp1 = result.split("类");
+    		int count = Integer.parseInt(temp1[0]);
+    		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
+    		int length=0;
+    		String[] temp2 = temp1[1].split(";;");
+    		for (int i=0; i<temp2.length; i++) {
+    			ArrayList<String> alist = new ArrayList<String>();
+    			String[] tmp = temp2[i].substring(1,temp2[i].length()-1).split("}, ");
+    			length = Math.max(length, tmp.length);
+    			for (int j=0; j<tmp.length; j++) {
+        			tmp[j] = tmp[j].substring(1);
+        			if (j==tmp.length-1) tmp[j] =  tmp[j].substring(0, tmp[j].length()-1);
+        			alist.add(tmp[j]);
+        		}
+    			lists.add(alist);
+    		}
+    		render("Application/result003.html",count,length,lists);
+    	} 
+    	else {
+    		renderText(result);
+    	}
     }
     
     
