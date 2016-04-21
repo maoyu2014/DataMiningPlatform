@@ -213,8 +213,8 @@ public class RunExperiment {
 			//导出数据
 			casenum=2;
 			result="导出数据执行完成";
-		} else if (ooo.operatorClass.equals("net.sf.javaml.clustering.KMeans") && ooo.operatorMethod.equals("cluster")) {
-			//Kmean聚类
+		} else if ( (ooo.operatorClass.equals("net.sf.javaml.clustering.KMeans") || ooo.operatorClass.equals("www.clustering.myFarthestFirst") || ooo.operatorClass.equals("www.clustering.myKMedoids") ) && ooo.operatorMethod.equals("cluster")) {
+			//各种聚类算法
 			casenum=3;
 			Dataset[] clusters = (Dataset[]) tempdata;
 			result = clusters.length+"类";
@@ -231,16 +231,22 @@ public class RunExperiment {
 			casenum=5;
 			Dataset dataset = (Dataset) tempdata;
 			result = dataset.toString();
-		} else if (ooo.operatorClass.equals("net.sf.javaml.featureselection.scoring.GainRatio") && ooo.operatorMethod.equals("score")) {
-			//对列进行评分
+		} else if (ooo.operatorClass.equals("www.featureselection.myGainRatio") && ooo.operatorMethod.equals("scoreAll")) {
+			//对所有列进行评分
 			casenum=6;
-			double scorevalue = (double) tempdata;
-			result = String.valueOf(scorevalue);
-		} else if (ooo.operatorClass.equals("net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM") && ooo.operatorMethod.equals("rank")) {
-			//对列进行ranking
+			double[] scorevalue = (double[]) tempdata;
+			result = "";
+			for (int i=0; i<scorevalue.length; i++) result+=scorevalue[i]+",";
+		} else if (ooo.operatorClass.equals("www.featureselection.myRecursiveFeatureEliminationSVM") && ooo.operatorMethod.equals("rankAll")) {
+			//对所有列进行ranking排名
 			casenum=7;
-			int rankvalue = (int) tempdata;
-			result = String.valueOf(rankvalue);
+			int[] rankvalue = (int[]) tempdata;
+			result = "";
+			for (int i=0; i<rankvalue.length; i++) result+=rankvalue[i]+",";
+		} else if (ooo.operatorClass.equals("www.classification.myKNearestNeighbors") && ooo.operatorMethod.equals("classifyDataset")) {
+			//各种分类算法
+			casenum = 8;
+			result = (String) tempdata;
 		} else if (ooo.operatorClass.equals("") && ooo.operatorMethod.equals("")) {
 			
 		} else {

@@ -4,33 +4,42 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Spare3.0</title>
 	<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-    #{get 'moreStyles' /}
+
 	<link rel="stylesheet" type="text/css" href="@{'/public/jquery-easyui-1.4.4/themes/default/easyui.css'}">
 	<link rel="stylesheet" type="text/css" href="@{'/public/jquery-easyui-1.4.4/themes/icon.css'}">
    
-    #{get 'moreScripts' /}
 	<script type="text/javascript" src="@{'/public/jquery-easyui-1.4.4/jquery.min.js'}"></script> 
 	<script type="text/javascript" src="@{'/public/jquery-easyui-1.4.4/jquery.easyui.min.js'}"></script>
 </head>
 
 <body>
 
-	<div style="font-size:30px;color:blue;text-align:center;">读取到的数据</div>
+	<div style="font-size:30px;color:blue;text-align:center;">分类和预测结果</div>
+	<h3>一共有：${total}条记录</h3>
+	<h3>分类正确条目：${correct}条，正确率：${correctLV}</h3>
+	<h3>分类错误条目：${wrong}条，错误率：${wrongLV}</h3>
 	<table class="easyui-datagrid" data-options="fitColumns:true,singleSelect:true,striped:true,rownumbers:true">
 	    <thead>
-	        <tr>
-	            <th data-options="field:'record',width:80">记录</th>
+	    	<tr>
+	            <th data-options="field:'record1',width:80">原始数据记录</th>
+	            <th data-options="field:'record2',width:80">预测记录分类</th>
+	            <th data-options="field:'record3',width:80">错误标记</th>
 	        </tr>
 	    </thead>
 	    <tbody>
-	    	#{list items:tmp, as:'str'}
-	        <tr>
-	            <td>${str}</td>
-	        </tr>
-	        #{/list}
+	    	#{list items:0..total-1, as:'i'}
+    		<tr>
+    			<td>${listA[i]}</td>
+    			<td>${listB[i]}</td>
+    			<td>
+    				#{if listC[i]=='false'}
+    					错误
+    				#{/if}
+    			</td>
+    		</tr>
+    		#{/list}
 	    </tbody>
 	</table>
-	
 	
 </body>
 </html>

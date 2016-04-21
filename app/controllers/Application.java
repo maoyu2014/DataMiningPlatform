@@ -49,7 +49,7 @@ public class Application extends Controller {
     public static void showResult(String key) {
     	Map<String, String> resultMaps = ResultObj.maps;
     	String result = resultMaps.get(key);
-    	resultMaps.remove(key);
+//    	resultMaps.remove(key);
     	String[] str = key.split(":");
     	int casenum = Integer.parseInt(str[1]);
     	
@@ -80,6 +80,42 @@ public class Application extends Controller {
     		}
     		render("Application/result003.html",count,length,lists);
     	} 
+    	else if (casenum==6) {
+    		String[] temp1 = result.split(",");
+    		List<Double> list = new ArrayList<>();
+    		for (int i=0; i<temp1.length; i++) {
+    			list.add(Double.parseDouble(temp1[i]));
+    		}
+    		render("Application/result006.html",list);
+    	} 
+    	else if (casenum==7) {
+    		String[] temp1 = result.split(",");
+    		List<Integer> list = new ArrayList<>();
+    		for (int i=0; i<temp1.length; i++) {
+    			list.add(Integer.parseInt(temp1[i]));
+    		}
+    		render("Application/result007.html",list);
+    	} 
+    	else if (casenum==8) {
+    		String[] A = result.split("错误预测");
+    		int wrong = Integer.parseInt(A[1]);
+    		String[] B = A[0].split("正确预测");
+    		int correct = Integer.parseInt(B[1]);
+    		int total = wrong+correct;
+    		String[] C = B[0].split(";;;");
+    		List<String> listA = new ArrayList<>();
+    		List<String> listB = new ArrayList<>();
+    		List<String> listC = new ArrayList<>();
+    		for (int i=0; i<C.length; i++) {
+    			String[] D = C[i].split(";;");
+    			listA.add(D[0]);
+    			listB.add(D[1]);
+    			listC.add(D[2]);
+    		}
+    		double correctLV = 1.0 * correct / total;
+    		double wrongLV = 1.0 * wrong / total;
+    		render("Application/result008.html",listA,listB,listC,correct,wrong,total,correctLV,wrongLV);
+    	}
     	else {
     		renderText(result);
     	}

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.javaml.core.Dataset;
+import net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM;
 import models.Operator;
 import models.OperatorChild;
 import models.OperatorFather;
@@ -37,6 +38,9 @@ public class AllServerOperators {
 
 		Operator operator = null;
 
+		
+		//-----------------------第0类，DataManipulation-------------------------
+		
 		/*
 		 * 第0类：DataManipulation--读取文件
 		 */
@@ -142,6 +146,7 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
+		//-----------------------第1类，Clustering-------------------------
 		
 		/*
 		 * 第1类：Clustering-KMeans算法
@@ -169,6 +174,57 @@ public class AllServerOperators {
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
+		/*
+		 * 第1类：Clustering-FarthestFirst算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "www.clustering.myFarthestFirst";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {int.class};
+		operator.classArgumentName = new String[] {"numClusters"};
+		operator.classArgumentValue = new Object[] {4};
+		operator.classFrontStyle = new String[] {"intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "FarthestFirst算法";
+		operator.description = "<p>Clustering-FarthestFirst算法</p>"+
+								"<p>FarthestFirst聚类算法啊，可以对一组数据进行聚类操作。参数numClusters表示需要聚合成几类，觉得不需要修改可以不用调整</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第1类：Clustering-KMedoids算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "www.clustering.myKMedoids";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {int.class, int.class};
+		operator.classArgumentName = new String[] {"numberOfClusters", "maxIterations"};
+		operator.classArgumentValue = new Object[] {4, 100};
+		operator.classFrontStyle = new String[] {"intnumberbox", "intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "KMedoids算法";
+		operator.description = "<p>Clustering-KMedoids算法</p>"+
+								"<p>KMedoids聚类算法啊，可以对一组数据进行聚类操作。参数numberOfClusters表示需要聚合成几类，参数maxIterations表示最大迭代次数，觉得不需要修改可以不用调整</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
 		 * 第1类：Clustering-AICScore评估算法
@@ -251,12 +307,14 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
+		//-----------------------第2类，FeatureSelection-------------------------
+		
 		/*
-		 * 第2类：FeatureSelection--Scoring特征得分训练
+		 * 第2类：FeatureSelection---Scoring---GainRatio特征得分训练
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[2];
-		operator.operatorClass = "net.sf.javaml.featureselection.scoring.GainRatio";
+		operator.operatorClass = "www.featureselection.myGainRatio";
 		operator.operatorMethod = "build";
 		
 		operator.classArgument = new Class[] {};
@@ -278,37 +336,37 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
-		 * 第2类：FeatureSelection--Scoring特征得分使用
+		 * 第2类：FeatureSelection--Scoring--GainRatio特征得分使用
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[2];
-		operator.operatorClass = "net.sf.javaml.featureselection.scoring.GainRatio";
-		operator.operatorMethod = "score";
+		operator.operatorClass = "www.featureselection.myGainRatio";
+		operator.operatorMethod = "scoreAll";
 		
 		operator.classArgument = new Class[] {};
 		operator.classArgumentName = new String[] {};
 		operator.classArgumentValue = new Object[] {};
 		operator.classFrontStyle = new String[] {};
 		
-		operator.methodArgument = new Class[] {int.class};
-		operator.methodArgumentName = new String[] {"attributeIndex"};
-		operator.methodArgumentValue = new Object[] {null};
-		operator.methodFrontStyle = new String[] {"intnumberbox"};
-		operator.returnType = double.class;
+		operator.methodArgument = new Class[] {};
+		operator.methodArgumentName = new String[] {};
+		operator.methodArgumentValue = new Object[] {};
+		operator.methodFrontStyle = new String[] {};
+		operator.returnType = double[].class;
 		
 		operator.name = "GainRatio特征得分使用";
 		operator.description = "<p>GainRatio特征得分使用</p>"+
 								"<p>对一个Dataset的数据的某一列进行评估，参数attributeIndex表示具体的某一列index，（从0开始），结果就是一个分值，得分越高越好</p>" +
-								"<p>输入:int，输出:double</p>";
+								"<p>输入:无，输出:double[]数组</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
-		 * 第2类：FeatureSelection--Ranking特征排名训练
+		 * 第2类：FeatureSelection--Ranking--RecursiveFeatureEliminationSVM特征排名训练
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[2];
-		operator.operatorClass = "net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM";
+		operator.operatorClass = "www.featureselection.myRecursiveFeatureEliminationSVM";
 		operator.operatorMethod = "build";
 		
 		operator.classArgument = new Class[] {double.class, boolean.class, int.class};
@@ -330,30 +388,88 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
-		 * 第2类：FeatureSelection--Ranking特征排名使用
+		 * 第2类：FeatureSelection--Ranking--RecursiveFeatureEliminationSVM特征排名使用
 		 */
 		operator = new Operator();
 		operator.category = Category.categorys[2];
-		operator.operatorClass = "net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM";
-		operator.operatorMethod = "rank";
+		operator.operatorClass = "www.featureselection.myRecursiveFeatureEliminationSVM";
+		operator.operatorMethod = "rankAll";
 		
 		operator.classArgument = new Class[] {};
 		operator.classArgumentName = new String[] {};
 		operator.classArgumentValue = new Object[] {};
 		operator.classFrontStyle = new String[] {};
 		
-		operator.methodArgument = new Class[] {int.class};
-		operator.methodArgumentName = new String[] {"attributeIndex"};
-		operator.methodArgumentValue = new Object[] {null};
-		operator.methodFrontStyle = new String[] {"intnumberbox"};
-		operator.returnType = int.class;
+		operator.methodArgument = new Class[] {};
+		operator.methodArgumentName = new String[] {};
+		operator.methodArgumentValue = new Object[] {};
+		operator.methodFrontStyle = new String[] {};
+		operator.returnType = int[].class;
 		
 		operator.name = "RecursiveFeatureEliminationSVM特征排名使用";
 		operator.description = "<p>RecursiveFeatureEliminationSVM特征评估使用</p>"+
 								"<p>对一个Dataset的数据的某一列进行评估，参数attributeIndex表示具体的某一列index，（从0开始），结果得到ranking排名，ranking越低越好</p>" +
-								"<p>输入:int，输出:double</p>";
+								"<p>输入:无，输出:int[]数组</p>";
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		
+		//-----------------------第3类，Classification-------------------------
+		
+		/*
+		 * 第3类：Classification--KNN算法训练
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myKNearestNeighbors";
+		operator.operatorMethod = "buildClassifier";
+		
+		operator.classArgument = new Class[] {int.class};
+		operator.classArgumentName = new String[] {"K"};
+		operator.classArgumentValue = new Object[] {5};
+		operator.classFrontStyle = new String[] {"intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
+		
+		operator.name = "KNN算法训练";
+		operator.description = "<p>KNN算法训练</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，参数K表示K nearest neighbor中K的值，训练完可以得到一个分类器</p>" +
+								"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第3类：Classification--KNN算法测试
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myKNearestNeighbors";
+		operator.operatorMethod = "classifyDataset";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = String.class;
+		
+		operator.name = "KNN算法测试";
+		operator.description = "<p>KNN算法测试</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，训练完可以得到一个分类器，利用这个分类器可以对新的数据集进行分类操作</p>" +
+								"<p>输入:Dataset，输出:String结果</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		
+		
 		
 		
 		
