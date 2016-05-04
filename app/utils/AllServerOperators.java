@@ -227,6 +227,162 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		/*
+		 * 第1类：Clustering-Cobweb算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "net.sf.javaml.clustering.Cobweb";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {double.class, double.class};
+		operator.classArgumentName = new String[] {"acuity", "cutoff"};
+		operator.classArgumentValue = new Object[] {0.5, 0.01};
+		operator.classFrontStyle = new String[] {"doublenumberbox", "doublenumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "Cobweb算法";
+		operator.description = "<p>Clustering-Cobweb算法</p>"+
+								"<p>Cobweb聚类算法啊，可以对一组数据进行聚类操作。参数acuity表示***，参数acuity表示***</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第1类：Clustering-DensityBasedSpatialClustering算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "net.sf.javaml.clustering.DensityBasedSpatialClustering";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {double.class, int.class};
+		operator.classArgumentName = new String[] {"epsilon", "minPoints"};
+		operator.classArgumentValue = new Object[] {0.1, 6};
+		operator.classFrontStyle = new String[] {"doublenumberbox", "intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "DensityBasedSpatialClustering算法";
+		operator.description = "<p>Clustering-DensityBasedSpatialClustering算法</p>"+
+								"<p>DensityBasedSpatialClustering聚类算法啊，可以对一组数据进行聚类操作。参数epsilon表示***，参数minPoints表示***</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第1类：Clustering-IterativeFarthestFirst算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "www.clustering.myIterativeFarthestFirst";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {int.class, int.class};
+		operator.classArgumentName = new String[] {"kMin", "kMax"};
+		operator.classArgumentValue = new Object[] {2, 6};
+		operator.classFrontStyle = new String[] {"intnumberbox", "intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "IterativeFarthestFirst算法";
+		operator.description = "<p>Clustering-IterativeFarthestFirst算法</p>"+
+								"<p>IterativeFarthestFirst聚类算法啊，可以对一组数据进行聚类操作。参数kMin表示***，参数kMax表示***</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第1类：Clustering-IterativeKMeans算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "www.clustering.myIterativeKMeans";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {int.class, int.class, int.class};
+		operator.classArgumentName = new String[] {"kMin", "kMax", "iterations"};
+		operator.classArgumentValue = new Object[] {2, 10, 100};
+		operator.classFrontStyle = new String[] {"intnumberbox", "intnumberbox", "intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "IterativeKMeans算法";
+		operator.description = "<p>Clustering-IterativeKMeans算法</p>"+
+								"<p>IterativeKMeans聚类算法啊，可以对一组数据进行聚类操作。参数kMin表示最小聚类数，参数kMax表示最大聚类数, 参数iterations表示迭代次数</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第1类：Clustering-IterativeMultiKMeans算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "www.clustering.myIterativeMultiKMeans";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {int.class, int.class, int.class, int.class};
+		operator.classArgumentName = new String[] {"kMin", "kMax", "iterations", "repeats"};
+		operator.classArgumentValue = new Object[] {2, 6, 100, 10};
+		operator.classFrontStyle = new String[] {"intnumberbox", "intnumberbox", "intnumberbox", "intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "IterativeMultiKMeans算法";
+		operator.description = "<p>Clustering-IterativeMultiKMeans算法</p>"+
+								"<p>IterativeMultiKMeans聚类算法啊，可以对一组数据进行聚类操作。参数kMin表示最小聚类数，参数kMax表示最大聚类数, 参数iterations表示迭代次数,repeats表示重复次数</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第1类：Clustering-MultiKMeans算法
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[1];
+		operator.operatorClass = "www.clustering.myMultiKMeans";
+		operator.operatorMethod = "cluster";
+		
+		operator.classArgument = new Class[] {int.class, int.class, int.class};
+		operator.classArgumentName = new String[] {"clusters", "iterations", "repeats"};
+		operator.classArgumentValue = new Object[] {4, 100, 10};
+		operator.classFrontStyle = new String[] {"intnumberbox", "intnumberbox", "intnumberbox"};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = Dataset[].class;
+				
+		operator.name = "MultiKMeans算法";
+		operator.description = "<p>Clustering-MultiKMeans算法</p>"+
+								"<p>MultiKMeans聚类算法啊，可以对一组数据进行聚类操作。参数clusters表示聚类数, 参数iterations表示迭代次数,repeats表示重复次数</p>" +
+								"<p>输入:Dataset，输出:Dataset[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
 		 * 第1类：Clustering-AICScore评估算法
 		 */
 		operator = new Operator();
@@ -468,9 +624,161 @@ public class AllServerOperators {
 		lists.add(operator);
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
+		/*
+		 * 第3类：Classification--KDtreeKNN算法训练
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myKDtreeKNN";
+		operator.operatorMethod = "buildClassifier";
 		
+		operator.classArgument = new Class[] {int.class};
+		operator.classArgumentName = new String[] {"K"};
+		operator.classArgumentValue = new Object[] {5};
+		operator.classFrontStyle = new String[] {"intnumberbox"};
 		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
 		
+		operator.name = "KDtreeKNN算法训练";
+		operator.description = "<p>KDtreeKNN算法训练</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，参数K表示K nearest neighbor中K的值，训练完可以得到一个分类器</p>" +
+								"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第3类：Classification--KDtreeKNN算法测试
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myKDtreeKNN";
+		operator.operatorMethod = "classifyDataset";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = String.class;
+		
+		operator.name = "KDtreeKNN算法测试";
+		operator.description = "<p>KDtreeKNN算法测试</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，训练完可以得到一个分类器，利用这个分类器可以对新的数据集进行分类操作</p>" +
+								"<p>输入:Dataset，输出:String结果</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第3类：Classification--MeanFeatureVotingClassifier算法训练
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myMeanFeatureVotingClassifier";
+		operator.operatorMethod = "buildClassifier";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
+		
+		operator.name = "MeanFeatureVotingClassifier算法训练";
+		operator.description = "<p>MeanFeatureVotingClassifier算法训练</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，训练完可以得到一个分类器</p>" +
+								"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第3类：Classification--MeanFeatureVotingClassifier算法测试
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myMeanFeatureVotingClassifier";
+		operator.operatorMethod = "classifyDataset";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = String.class;
+		
+		operator.name = "MeanFeatureVotingClassifier算法测试";
+		operator.description = "<p>MeanFeatureVotingClassifier算法测试</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，训练完可以得到一个分类器，利用这个分类器可以对新的数据集进行分类操作</p>" +
+								"<p>输入:Dataset，输出:String结果</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第3类：Classification--NearestMeanClassifier算法训练
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myNearestMeanClassifier";
+		operator.operatorMethod = "buildClassifier";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = void.class;
+		
+		operator.name = "NearestMeanClassifier算法训练";
+		operator.description = "<p>NearestMeanClassifier算法训练</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，训练完可以得到一个分类器</p>" +
+								"<p>输入:Dataset，输出:void</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		/*
+		 * 第3类：Classification--NearestMeanClassifier算法测试
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[3];
+		operator.operatorClass = "www.classification.myNearestMeanClassifier";
+		operator.operatorMethod = "classifyDataset";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {Dataset.class};
+		operator.methodArgumentName = new String[] {"data"};
+		operator.methodArgumentValue = new Object[] {null};
+		operator.methodFrontStyle = new String[] {"inner-data"};
+		operator.returnType = String.class;
+		
+		operator.name = "NearestMeanClassifier算法测试";
+		operator.description = "<p>NearestMeanClassifier算法测试</p>"+
+								"<p>对一个Dataset的数据的使用KNN算法进行训练，训练完可以得到一个分类器，利用这个分类器可以对新的数据集进行分类操作</p>" +
+								"<p>输入:Dataset，输出:String结果</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
 		

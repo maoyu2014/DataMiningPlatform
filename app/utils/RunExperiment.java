@@ -213,7 +213,16 @@ public class RunExperiment {
 			//导出数据
 			casenum=2;
 			result="导出数据执行完成";
-		} else if ( (ooo.operatorClass.equals("net.sf.javaml.clustering.KMeans") || ooo.operatorClass.equals("www.clustering.myFarthestFirst") || ooo.operatorClass.equals("www.clustering.myKMedoids") ) && ooo.operatorMethod.equals("cluster")) {
+		} else if ( (ooo.operatorClass.equals("net.sf.javaml.clustering.KMeans") || 
+					ooo.operatorClass.equals("www.clustering.myFarthestFirst") || 
+					ooo.operatorClass.equals("www.clustering.myKMedoids") || 
+					ooo.operatorClass.equals("net.sf.javaml.clustering.Cobweb") ||
+					ooo.operatorClass.equals("net.sf.javaml.clustering.DensityBasedSpatialClustering") || 
+					ooo.operatorClass.equals("www.clustering.myIterativeFarthestFirst") || 
+					ooo.operatorClass.equals("www.clustering.myIterativeKMeans") || 
+					ooo.operatorClass.equals("www.clustering.myIterativeMultiKMeans") ||
+					ooo.operatorClass.equals("www.clustering.myMultiKMeans")) && 
+					ooo.operatorMethod.equals("cluster")) {
 			//各种聚类算法
 			casenum=3;
 			Dataset[] clusters = (Dataset[]) tempdata;
@@ -243,7 +252,11 @@ public class RunExperiment {
 			int[] rankvalue = (int[]) tempdata;
 			result = "";
 			for (int i=0; i<rankvalue.length; i++) result+=rankvalue[i]+",";
-		} else if (ooo.operatorClass.equals("www.classification.myKNearestNeighbors") && ooo.operatorMethod.equals("classifyDataset")) {
+		} else if ( (ooo.operatorClass.equals("www.classification.myKNearestNeighbors") ||
+					ooo.operatorClass.equals("www.classification.myKDtreeKNN") ||
+					ooo.operatorClass.equals("www.classification.myMeanFeatureVotingClassifier") ||
+					ooo.operatorClass.equals("www.classification.myNearestMeanClassifier") ) && 
+					ooo.operatorMethod.equals("classifyDataset")) {
 			//各种分类算法
 			casenum = 8;
 			result = (String) tempdata;

@@ -54,6 +54,7 @@ public class Application extends Controller {
     	int casenum = Integer.parseInt(str[1]);
     	
     	if (casenum==1) {
+    		//导入数据
     		String[] tmp = result.substring(1,result.length()-1).split("}, ");
     		for (int i=0; i<tmp.length; i++) {
     			tmp[i] = tmp[i].substring(1);
@@ -62,6 +63,7 @@ public class Application extends Controller {
     		render("Application/result001.html",tmp);
     	} 
     	else if (casenum==3) {
+    		//各种聚类算法
     		String[] temp1 = result.split("类");
     		int count = Integer.parseInt(temp1[0]);
     		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
@@ -81,6 +83,7 @@ public class Application extends Controller {
     		render("Application/result003.html",count,length,lists);
     	} 
     	else if (casenum==6) {
+    		//对所有列进行评分
     		String[] temp1 = result.split(",");
     		List<Double> list = new ArrayList<>();
     		for (int i=0; i<temp1.length; i++) {
@@ -89,6 +92,7 @@ public class Application extends Controller {
     		render("Application/result006.html",list);
     	} 
     	else if (casenum==7) {
+    		//对所有列进行ranking排名
     		String[] temp1 = result.split(",");
     		List<Integer> list = new ArrayList<>();
     		for (int i=0; i<temp1.length; i++) {
@@ -97,6 +101,7 @@ public class Application extends Controller {
     		render("Application/result007.html",list);
     	} 
     	else if (casenum==8) {
+    		//各种分类算法
     		String[] A = result.split("错误预测");
     		int wrong = Integer.parseInt(A[1]);
     		String[] B = A[0].split("正确预测");
