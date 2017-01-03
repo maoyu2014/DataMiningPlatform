@@ -109,6 +109,26 @@ public class AllFrontOperators {
 			}
 		}
 		lists.add(fa);
+		
+		fa = new OperatorFather(4, "TCM", "open", null);
+		fa.children = new ArrayList<>();
+		for (Operator operator : listO) {
+			if (operator.category.equals(Category.categorys[4])) {
+				ch = new OperatorChild();
+				ch.text = operator.name;
+				ch.operatorClass=operator.operatorClass;
+				ch.operatorMethod=operator.operatorMethod;
+				ch.classArgumentName=operator.classArgumentName;
+				ch.classArgumentValue=operator.classArgumentValue;
+				ch.classFrontStyle=operator.classFrontStyle;
+				ch.methodArgumentName=operator.methodArgumentName;
+				ch.methodArgumentValue=operator.methodArgumentValue;
+				ch.methodFrontStyle=operator.methodFrontStyle;
+				ch.description=operator.description;
+				fa.children.add(ch);
+			}
+		}
+		lists.add(fa);
 	}
 
 }

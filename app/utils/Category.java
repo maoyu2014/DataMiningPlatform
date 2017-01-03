@@ -2,5 +2,5 @@ package utils;
 
 public class Category {
 
-	public static String[] categorys = {"DataManipulation","Clustering","FeatureSelection","Classification"};
+	public static String[] categorys = {"DataManipulation","Clustering","FeatureSelection","Classification","TCM"};
 }

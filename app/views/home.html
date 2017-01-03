@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Spare3.0</title>
+<title>Spora3.0</title>
 	<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
     #{get 'moreStyles' /}
 	<link rel="stylesheet" type="text/css" href="@{'/public/jquery-easyui-1.4.4/themes/default/easyui.css'}">
@@ -20,11 +20,12 @@
 	<script type="text/javascript" src="@{'/public/javascripts/removeOperatorFromExpGrid.js'}"></script>
 	<script type="text/javascript" src="@{'/public/javascripts/loadOperatorParameter.js'}"></script>
 	<script type="text/javascript" src="@{'/public/javascripts/runExperiment.js'}"></script>
+	<script type="text/javascript" src="@{'/public/javascripts/experimentTreeData.js'}"></script>
 </head>
 
 <body class="easyui-layout">
     <div data-options="region:'north',split:true" style="height:10%;">
-		<div style="text-align:center;font-size:25px;font-weight:600;margin-top:10px;"><a href="@{Application.index()}" style="text-decoration:none;">DartSpoar3.0中医药数据挖掘平台</a></div>
+		<div style="text-align:center;font-size:25px;font-weight:600;margin-top:10px;"><a href="@{Application.index()}" style="text-decoration:none;">DartSpora3.0中医药数据挖掘平台</a></div>
 	</div>
 	
     <div data-options="region:'south',split:true" style="height:5%;">
@@ -42,6 +43,11 @@
 			</div>
 			
 			<div data-options="region:'south',title:'实验集',split:true" style="height:45%;">
+			
+				<div>
+					<ul id="experimentTreeId"></ul>
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -154,6 +160,12 @@
 				
 				//允许拖动算子
 				enableDragg();
+				
+				$('#experimentTreeId').tree({
+					animate:true,
+					lines:false,
+					data: experimentTreeData
+				});
 			});
 			
 			//允许主流程模块接受拖动过来的算子

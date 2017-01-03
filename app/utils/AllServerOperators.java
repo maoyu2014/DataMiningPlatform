@@ -781,6 +781,60 @@ public class AllServerOperators {
 		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
+		//-----------------------第4类，TCM-------------------------
+		
+		/*
+		 * 第4类：中医药症状分词
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[4];
+		operator.operatorClass = "www.tcm.algorithm1";
+		operator.operatorMethod = "method1";
+		
+		operator.classArgument = new Class[] {String.class, double.class,double.class,double.class,double.class,int.class,int.class};
+		operator.classArgumentName = new String[] {"待切分汉字串", "a1","p1","a2","p2","rank1","rank2"};
+		operator.classArgumentValue = new Object[] {"", 0.1, 0.001, 0.1, 0.001, 3, 3};
+		operator.classFrontStyle = new String[] {"textbox", "doublenumberbox","doublenumberbox","doublenumberbox","doublenumberbox","intnumberbox","intnumberbox"};
+		
+		operator.methodArgument = new Class[] {};
+		operator.methodArgumentName = new String[] {};
+		operator.methodArgumentValue = new Object[] {};
+		operator.methodFrontStyle = new String[] {};
+		operator.returnType = String.class;
+		
+		operator.name = "双向条件概率和相对位置分词算法";
+		operator.description = "<p>双向条件概率和绝对位置分词算法</p>"+
+								"<p>对一个输入的症状句子的使用双向条件概率和绝对位置进行分词，参数a1和a2分别正向和逆向的成词概率，参数p1和p2分别表示正向和逆向的不成词概率，rank1和rank2分别表示两个相对位置</p>" +
+								"<p>输入:String，输出:String</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
+		
+		
+		/*
+		 * 第4类：中医药症状句子相似度
+		 */
+		operator = new Operator();
+		operator.category = Category.categorys[4];
+		operator.operatorClass = "www.tcm.algorithm2";
+		operator.operatorMethod = "method2";
+		
+		operator.classArgument = new Class[] {};
+		operator.classArgumentName = new String[] {};
+		operator.classArgumentValue = new Object[] {};
+		operator.classFrontStyle = new String[] {};
+		
+		operator.methodArgument = new Class[] {String.class};
+		operator.methodArgumentName = new String[] {"待计算症状句子"};
+		operator.methodArgumentValue = new Object[] {""};
+		operator.methodFrontStyle = new String[] {"textbox"};
+		operator.returnType = String.class;
+		
+		operator.name = "融合词语相似性和词语重要性的句子相似度计算";
+		operator.description = "<p>双向条件概率和绝对位置分词算法</p>"+
+								"<p>对一个输入的症状句子的使用融合词语相似性和词语重要性的句子相似度计算方法，在库中寻找出相似程度最高的前3条症状句子。</p>" +
+								"<p>输入:String，输出:String[]数组</p>";
+		lists.add(operator);
+		maps.put(operator.operatorClass+"."+operator.operatorMethod, operator);
 		
 		
 	}
